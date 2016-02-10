@@ -28,7 +28,10 @@ footer {
     margin: 50px 0;
 }
 
-/*Buttons*/
+/*Inputs and Buttons*/
 .city-button {
   margin-bottom: 10px;
+}
+.city-input{
+  margin-left: 20px
 }
