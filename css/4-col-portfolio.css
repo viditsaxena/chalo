@@ -20,18 +20,16 @@ body {
 .navbar-inverse .navbar-nav>li>a {
     color: white;
 }
-.portfolio-item {
-    margin-bottom: 25px;
-}
-
-footer {
-    margin: 50px 0;
-}
 
 /*Inputs and Buttons*/
 .city-button {
   margin-bottom: 10px;
+  background-color: transparent
 }
 .city-input{
   margin-left: 20px
+}
+
+footer {
+    margin: 50px 0;
 }
