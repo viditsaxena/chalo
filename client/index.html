@@ -55,8 +55,8 @@
                 <a class="navbar-brand" href="#/">CHALO</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav pull-right">
+            <div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
                     <li ng-hide="token">
                         <a href="#/login">Login</a>
                     </li>
@@ -67,6 +67,18 @@
                         <a class="btn" ng-click="logOut()">Logout</a>
                     </li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li ng-show="token">
+                        <a href="#/create">Create A Plan</a>
+                    </li>
+                    <li ng-show="token">
+                        <a href="#/plans">Browse Plans</a>
+                    </li>
+                    <li ng-show="token">
+                        <a href="#/mytrips">My Plans</a>
+                    </li>
+                </ul>
+
             </div>
             <!-- /.navbar-collapse -->
         </div>

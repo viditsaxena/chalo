@@ -21,15 +21,15 @@ chaloApp.config(function($routeProvider){
     })
     .when('/create', {
       templateUrl: './views/create.html',
-      controller: 'itineraryController'
+      controller: 'planController'
     })
-    .when('/itineraries', {
-      templateUrl: './views/itineraries.html',
-      controller: 'itineraryController'
+    .when('/plans', {
+      templateUrl: './views/plans.html',
+      controller: 'planController'
     })
     .when('/show', {
       templateUrl: './views/show.html',
-      controller: 'itineraryController'
+      controller: 'planController'
     })
 });
 
@@ -85,5 +85,5 @@ chaloApp.controller('homeController', ['$scope', '$rootScope', '$http', '$cookie
 
 }]);
 
-chaloApp.controller('itineraryController', ['$scope', '$rootScope', '$http', '$cookies', '$location', function($scope, $rootScope, $http, $cookies, $location){
+chaloApp.controller('planController', ['$scope', '$rootScope', '$http', '$cookies', '$location', function($scope, $rootScope, $http, $cookies, $location){
 }]);

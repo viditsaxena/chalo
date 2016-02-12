@@ -32,16 +32,16 @@ mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/chalo');
     res.sendFile(__dirname + '/client/new.html');
   });
 
-  app.get('/itinerary', function(req, res){
-    res.sendFile(__dirname + '/client/itinerary.html');
+  app.get('/plan', function(req, res){
+    res.sendFile(__dirname + '/client/plan.html');
   });
 
 
   // *** Routing/Controllers ***
   var UsersController = require('./server/controllers/users');
   app.use('/api/users', UsersController);
-  var ItinerariesController = require('./server/controllers/itineraries');
-  app.use('/api/itineraries', ItinerariesController);
+  var PlansController = require('./server/controllers/plans');
+  app.use('/api/plans', PlansController);
 
 
   app.listen(process.env.PORT || 8080, function(){
