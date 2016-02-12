@@ -1,0 +1,28 @@
+{
+  "name": "chalo",
+  "version": "1.0.0",
+  "description": "Travel without planning",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viditsaxena/chalo.git"
+  },
+  "author": "Vidit Saxena",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/viditsaxena/chalo/issues"
+  },
+  "homepage": "https://github.com/viditsaxena/chalo#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.3",
+    "morgan": "^1.6.1",
+    "rand-token": "^0.2.1"
+  }
+}
