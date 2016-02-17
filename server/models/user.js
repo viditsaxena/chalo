@@ -13,8 +13,7 @@ var mongoose    =    require('mongoose'),
       lastName: {type: String},
       bio: {type: String},
       profileImage: {type: String},
-      token: {type: String},
-      plans:[{id:{type: String}}]
+      token: {type: String}
     });
 
 

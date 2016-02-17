@@ -42,8 +42,7 @@ mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/chalo');
   app.use('/api/users', UsersController);
   var PlansController = require('./server/controllers/plans');
   app.use('/api/plans', PlansController);
-  var SpotsController = require('./server/controllers/spots');
-  app.use('/api/spots', SpotsController);
+
 
 
   app.listen(process.env.PORT || 8080, function(){

@@ -41,6 +41,7 @@ chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookie
     $scope.logInUser = {};
 
 
+
     $scope.createUser = function(){
       $http.post('/api/users', $scope.newUser).then(function(response){
         console.log(response.data)
@@ -55,6 +56,7 @@ chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookie
         $rootScope.token = reponse.data.token;
         console.log($rootScope.token);
         $cookies.put('token', $rootScope.token);
+        $cookies.put('logInUserId', reponse.data.id);
         $scope.newUser = {};
         $location.path('/')
       });
@@ -63,9 +65,12 @@ chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookie
 
     $scope.obtainToken = function(){
       $http.post("/api/users/authentication_token", $scope.logInUser).then(function(reponse){
+        console.log(reponse.data);
         $rootScope.token = reponse.data.token;
         console.log($rootScope.token);
         $cookies.put('token', $rootScope.token);
+        $cookies.put('logInUserId', reponse.data.id);
+        console.log($cookies.get('logInUserId'));
         $location.path('/')
       });
     };
@@ -74,6 +79,7 @@ $rootScope.token = $cookies.get('token');
 
     $scope.logOut = function(){
       $cookies.remove('token');
+      $cookies.remove('logInUserId');
       $rootScope.token = $cookies.get('token');
       $scope.logInUser = {};
       $location.path('/')
@@ -86,4 +92,25 @@ chaloApp.controller('homeController', ['$scope', '$rootScope', '$http', '$cookie
 }]);
 
 chaloApp.controller('planController', ['$scope', '$rootScope', '$http', '$cookies', '$location', function($scope, $rootScope, $http, $cookies, $location){
+  var logInUserId = $cookies.get('logInUserId')
+  console.log(logInUserId);
+  $scope.newPlan = {title:'', userId: logInUserId, spots:[{}]}
+console.log($scope.newPlan);
+  $scope.addPlan = function(){
+    $http({
+      url: '/api/plans',
+      method: 'post',
+      headers:{
+        token: $rootScope.token
+      },
+      data: $scope.newPlan
+    }).then(function(response){
+      $scope.newPlan = {title: '', userId: logInUserId, items:[{}]};
+    });
+  };
+
+  $scope.addEmptySpot = function(){
+    $scope.newPlan.spots.push({});
+  };
+
 }]);

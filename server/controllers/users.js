@@ -20,7 +20,7 @@ var express  =  require('express'),
           if(isMatch){
             user.generateToken();
             user.save(function(){
-              res.json({token: user.token});
+              res.json({id: user._id, token: user.token});
             });
           } else {
             res.json({status: 401, message: 'Please Sign Up before'});
