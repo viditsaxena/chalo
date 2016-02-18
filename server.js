@@ -28,13 +28,13 @@ mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/chalo');
     res.sendFile(__dirname + '/client/index.html');
   });
 
-  app.get('/new', function(req, res){
-    res.sendFile(__dirname + '/client/new.html');
-  });
+  // app.get('/new', function(req, res){
+  //   res.sendFile(__dirname + '/client/new.html');
+  // });
 
-  app.get('/plan', function(req, res){
-    res.sendFile(__dirname + '/client/plan.html');
-  });
+  // app.get('/plan', function(req, res){
+  //   res.sendFile(__dirname + '/client/views/plan.html');
+  // });
 
 
   // *** Routing/Controllers ***
