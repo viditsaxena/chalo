@@ -106,6 +106,7 @@ console.log($scope.newPlan);
       data: $scope.newPlan
     }).then(function(response){
       $scope.newPlan = {title: '', userId: logInUserId, items:[{}]};
+      $location.path('/show')
     });
   };
 

@@ -1,11 +1,18 @@
 #plan-page {
   height: 100%;
-  margin: 0;
+  width: 100%;
+  /*margin: 0;*/
+  padding: 0;
+  margin: 0px auto;
+}
+#map-section {
+  height: 100%;
   padding: 0;
 }
 #map {
   height: 100%;
 }
+
 .controls {
 margin-top: 10px;
 border: 1px solid transparent;
