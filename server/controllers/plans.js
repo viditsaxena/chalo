@@ -6,11 +6,20 @@ var             express  = require('express'),
 
 var PlansController = express.Router();
 var Plan = require('../models/plan');
-
+// var User = require('../models/user');
 // Routes
 PlansController.get('/', function(req, res){
   Plan.find({}, function(err, plans){
   res.json(plans);
+  });
+});
+
+PlansController.get('/search', function(req, res){
+  console.log(req.query.userId);
+  Plan.find({ userId: req.query.userId }, function (err, plans){
+    console.log(plans);
+
+    res.json(plans);
   });
 });
 
@@ -19,6 +28,8 @@ PlansController.get('/:id', function(req, res){
     res.json(plan);
   });
 });
+
+
 
 
 

@@ -1,17 +1,6 @@
-<div  ng-repeat="user in users">
-  <span ng-click="user.recipesDisplay = !user.recipesDisplay">
-    <h4>{{ user.username }}</h4>
-    <ul ng-show="user.recipesDisplay">
-      <li ng-repeat="recipe in user.recipes">
-        <p>
-          {{recipe.name}}
-          <ul>
-            <li ng-repeat="item in recipe.items">
-              {{item.name}} - {{item.quantity}}
-            </li>
-          </ul>
-        </p>
-      </li>
-    </ul>
-  </span>
+<div class="list-group">
+  <a href="#" class="list-group-item" ng-repeat="plan in plans">
+    <h4 class="list-group-item-heading">{{ plan.title }}</h4>
+    <p class="list-group-item-text">{{ plan.userId }}</p>
+  </a>
 </div>

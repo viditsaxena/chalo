@@ -31,6 +31,10 @@ chaloApp.config(function($routeProvider){
       templateUrl: './views/show.html',
       controller: 'planController'
     })
+    .when('/myplans', {
+      templateUrl: './views/myplans.html',
+      controller: 'planController'
+    })
 });
 
 chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookies', '$location', function($scope, $rootScope, $http, $cookies, $location){
@@ -92,10 +96,34 @@ chaloApp.controller('homeController', ['$scope', '$rootScope', '$http', '$cookie
 }]);
 
 chaloApp.controller('planController', ['$scope', '$rootScope', '$http', '$cookies', '$location', function($scope, $rootScope, $http, $cookies, $location){
+
   var logInUserId = $cookies.get('logInUserId')
   console.log(logInUserId);
-  $scope.newPlan = {title:'', userId: logInUserId, spots:[{}]}
-console.log($scope.newPlan);
+  $scope.newPlan = {title:'', userId: logInUserId}
+  var currentTitle = $cookies.get('currentTitle')
+  $scope.showPlan = {title: currentTitle, userId: logInUserId, spots:[{}]}
+  $scope.currentUserPlans = [];
+  $scope.plans = [];
+  console.log($scope.newPlan);
+
+  $scope.getPlans = function(){
+    $http.get('/api/plans').then(function(response){
+      $scope.plans = response.data;
+    });
+  }
+  $scope.getPlans();
+
+
+  $scope.getCurrentUserPlans = function(){
+
+    var url = '/api/plans/search?userId=' + logInUserId;
+    $http.get(url).then(function(response){
+      $scope.currentUserPlans = response.data;
+    });
+  }
+
+  $scope.getCurrentUserPlans();
+
   $scope.addPlan = function(){
     $http({
       url: '/api/plans',
@@ -105,7 +133,8 @@ console.log($scope.newPlan);
       },
       data: $scope.newPlan
     }).then(function(response){
-      $scope.newPlan = {title: '', userId: logInUserId, items:[{}]};
+      $cookies.put('currentTitle', response.data.title);
+      $scope.newPlan = {title: '', userId: logInUserId};
       $location.path('/show')
     });
   };
