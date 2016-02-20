@@ -142,9 +142,32 @@ chaloApp.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
   };
 
   $scope.addSpot = function(){
-    alert('Example of infowindow with ng-click')
     $scope.showPlan.spots.push($scope.place);
+    $scope.addSpotToDatabase();
   };
+
+  $scope.addSpotToDatabase = function(){
+        var plan = $scope.showPlan;
+        var id = $cookies.get('currentPlanId')
+        var url = '/api/plans/' + id;
+        $http.patch(url, plan).then(function(response){
+          console.log(response.data);
+            $scope.showPlan = response.data;
+        });
+  }
+
+  $scope.getOnePlan = function(){
+    var id = $cookies.get('currentPlanId')
+    var url = '/api/plans/' + id;
+
+    $http.get(url).then(function(response){
+      $scope.showPlan = response.data;
+      });
+  }
+  $scope.getOnePlan();
+
+
+
 
   $scope.initializeMap = function() {
     var map = new google.maps.Map(document.getElementById('map'), {
