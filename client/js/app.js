@@ -95,16 +95,17 @@ chaloApp.controller('homeController', ['$scope', '$rootScope', '$http', '$cookie
 
 }]);
 
-chaloApp.controller('planController', ['$scope', '$rootScope', '$http', '$cookies', '$location', function($scope, $rootScope, $http, $cookies, $location){
+chaloApp.controller('planController', ['$scope', '$rootScope', '$http', '$cookies', '$location', '$compile', function($scope, $rootScope, $http, $cookies, $location, $compile){
 
   var logInUserId = $cookies.get('logInUserId')
-  console.log(logInUserId);
   $scope.newPlan = {title:'', userId: logInUserId}
   var currentTitle = $cookies.get('currentTitle')
   $scope.showPlan = {title: currentTitle, userId: logInUserId, spots:[{}]}
   $scope.currentUserPlans = [];
   $scope.plans = [];
-  console.log($scope.newPlan);
+//From the Google Autofill object in initializeMap Function
+  $scope.place = {};
+  console.log($scope.place);
 
   $scope.getPlans = function(){
     $http.get('/api/plans').then(function(response){
@@ -121,7 +122,6 @@ chaloApp.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
       $scope.currentUserPlans = response.data;
     });
   }
-
   $scope.getCurrentUserPlans();
 
   $scope.addPlan = function(){
@@ -133,14 +133,17 @@ chaloApp.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
       },
       data: $scope.newPlan
     }).then(function(response){
+      //Get the title and id of the added plan and store it in cookies for use later.
       $cookies.put('currentTitle', response.data.title);
+      $cookies.put('currentPlanId', response.data._id);
       $scope.newPlan = {title: '', userId: logInUserId};
       $location.path('/show')
     });
   };
 
-  $scope.addEmptySpot = function(){
-    $scope.newPlan.spots.push({});
+  $scope.addSpot = function(){
+    alert('Example of infowindow with ng-click')
+    $scope.showPlan.spots.push($scope.place);
   };
 
   $scope.initializeMap = function() {
@@ -172,58 +175,54 @@ chaloApp.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
       anchorPoint: new google.maps.Point(0, -29)
     });
 
+
+
+
+
     autocomplete.addListener('place_changed', function() {
       infowindow.close();
       marker.setVisible(false);
-      var place = autocomplete.getPlace();
-      if (!place.geometry) {
+      $scope.place = autocomplete.getPlace();
+      console.log($scope.place);
+      if (!$scope.place.geometry) {
         window.alert("Autocomplete's returned place contains no geometry");
         return;
       }
 
       // If the place has a geometry, then present it on a map.
-      if (place.geometry.viewport) {
-        map.fitBounds(place.geometry.viewport);
+      if ($scope.place.geometry.viewport) {
+        map.fitBounds($scope.place.geometry.viewport);
       } else {
-        map.setCenter(place.geometry.location);
+        map.setCenter($scope.place.geometry.location);
         map.setZoom(17);  // Why 17? Because it looks good.
       }
       marker.setIcon(/** @type {google.maps.Icon} */({
-        url: place.icon,
+        url: $scope.place.icon,
         size: new google.maps.Size(71, 71),
         origin: new google.maps.Point(0, 0),
         anchor: new google.maps.Point(17, 34),
         scaledSize: new google.maps.Size(35, 35)
       }));
-      marker.setPosition(place.geometry.location);
+      marker.setPosition($scope.place.geometry.location);
       marker.setVisible(true);
 
       var address = '';
-      if (place.address_components) {
+      if ($scope.place.address_components) {
         address = [
-          (place.address_components[0] && place.address_components[0].short_name || ''),
-          (place.address_components[1] && place.address_components[1].short_name || ''),
-          (place.address_components[2] && place.address_components[2].short_name || '')
+          ($scope.place.address_components[0] && $scope.place.address_components[0].short_name || ''),
+          ($scope.place.address_components[1] && $scope.place.address_components[1].short_name || ''),
+          ($scope.place.address_components[2] && $scope.place.address_components[2].short_name || '')
         ].join(' ');
       }
 
-      infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+      var contentString = '<div><strong>' + $scope.place.name + '</strong><br>' + address + ' <br><button class="btn btn-success" ng-click="addSpot()">Add this Spot</button>';
+      var compiled = $compile(contentString)($scope);
+
+      infowindow.setContent(compiled[0]);
       infowindow.open(map, marker);
+
     });
 
-    // Sets a listener on a radio button to change the filter type on Places
-    // Autocomplete.
-    // function setupClickListener(id, types) {
-    //   var radioButton = document.getElementById(id);
-    //   radioButton.addEventListener('click', function() {
-    //     autocomplete.setTypes(types);
-    //   });
-    // }
-    //
-    // setupClickListener('changetype-all', []);
-    // setupClickListener('changetype-address', ['address']);
-    // setupClickListener('changetype-establishment', ['establishment']);
-    // setupClickListener('changetype-geocode', ['geocode']);
-  }
+  } // Initialize Map ends here.
 
 }]);

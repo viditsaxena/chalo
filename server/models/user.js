@@ -13,8 +13,11 @@ var mongoose    =    require('mongoose'),
       lastName: {type: String},
       bio: {type: String},
       profileImage: {type: String},
-      token: {type: String}
-    });
+      token: {type: String},
+      created_at: {type: Date, default: Date.now},
+      updated_at: {type: Date, default: Date.now}
+});
+  
 
 
     // pre-save "hook"
@@ -25,6 +28,13 @@ var mongoose    =    require('mongoose'),
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(user.password, salt);
         user.password = hash;
+      }
+
+      // Sets the created_at parameter equal to the current time
+      now = new Date();
+      this.updated_at = now;
+      if(!this.created_at) {
+          this.created_at = now
       }
 
       next();
