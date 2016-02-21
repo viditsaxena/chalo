@@ -17,7 +17,7 @@
                 </div>
 
                   <div class="list-group">
-                    <a href="#" class="list-group-item" ng-repeat="spot in showPlan.spots">
+                    <a href="#" ng-click="getSpotDetails(spot)" class="list-group-item" ng-repeat="spot in showPlan.spots">
                       <h4 class="list-group-item-heading">{{ spot.name }}</h4>
                       <p class="list-group-item-text">Recommended by Leo Messi</p>
                     </a>

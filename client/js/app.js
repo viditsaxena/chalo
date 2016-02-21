@@ -1,4 +1,3 @@
-console.log("app.js am loaded");
 
 
 var chaloApp = angular.module('chaloApp', ['ngCookies', 'ngRoute', 'ngMessages']);
@@ -48,7 +47,6 @@ chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookie
 
     $scope.createUser = function(){
       $http.post('/api/users', $scope.newUser).then(function(response){
-        console.log(response.data)
         $scope.users.push(response.data);
         // $scope.newUser = {};
         $scope.instantLogin();
@@ -58,7 +56,6 @@ chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookie
     $scope.instantLogin = function(){
       $http.post("/api/users/authentication_token", $scope.newUser).then(function(reponse){
         $rootScope.token = reponse.data.token;
-        console.log($rootScope.token);
         $cookies.put('token', $rootScope.token);
         $cookies.put('logInUserId', reponse.data.id);
         $scope.newUser = {};
@@ -69,12 +66,9 @@ chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookie
 
     $scope.obtainToken = function(){
       $http.post("/api/users/authentication_token", $scope.logInUser).then(function(reponse){
-        console.log(reponse.data);
         $rootScope.token = reponse.data.token;
-        console.log($rootScope.token);
         $cookies.put('token', $rootScope.token);
         $cookies.put('logInUserId', reponse.data.id);
-        console.log($cookies.get('logInUserId'));
         $location.path('/')
       });
     };
@@ -103,9 +97,13 @@ chaloApp.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
   $scope.showPlan = {title: currentTitle, userId: logInUserId, spots:[{}]}
   $scope.currentUserPlans = [];
   $scope.plans = [];
-//From the Google Autofill object in initializeMap Function
+  //From the Google Autofill object in initializeMap Function
   $scope.place = {};
-  console.log($scope.place);
+  //Only some of things to be added to the DB. Too much comes back from Google to be storing in your own DB.
+  $scope.spot = {};
+  //the object which holds the getDetails method call response from Google
+  $scope.spotDetails = {};
+  var service;
 
   $scope.getPlans = function(){
     $http.get('/api/plans').then(function(response){
@@ -141,29 +139,64 @@ chaloApp.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
     });
   };
 
+  //When user clicks on the button in an info window.
   $scope.addSpot = function(){
-    $scope.showPlan.spots.push($scope.place);
+    //push that spot in the showPlan object that holds all the info about the plan.
+    $scope.showPlan.spots.push($scope.spot);
+    //call the function that updates the database for that plan
     $scope.addSpotToDatabase();
   };
 
+  //function that updates the database anytime a new spot is added.
   $scope.addSpotToDatabase = function(){
+        //get the latest info on a plan.
         var plan = $scope.showPlan;
+        //get the plan ID so we can send it to the right route.
         var id = $cookies.get('currentPlanId')
         var url = '/api/plans/' + id;
         $http.patch(url, plan).then(function(response){
-          console.log(response.data);
             $scope.showPlan = response.data;
         });
   }
+  //This is for myPlans or Browse Plans section, when user clicks on a plan.
+  $scope.selectOnePlan = function(plan){
+    //remove whatever is stored in cookies
+    $cookies.remove('currentPlanId');
+    console.log(plan);
+    //put the id of the plan clicked in the cookies.
+    $cookies.put('currentPlanId', plan._id);
+    //call the function that queries for a plan from the database using plan id.
+    $scope.getOnePlan();
+  }
 
+  //This is for show page when user clicks on a spot, We should get details from Google.
+  $scope.getSpotDetails = function(spot){
+    var request = {
+      placeId: spot.place_id
+    };
+
+    service.getDetails(request, callback);
+
+    function callback(place, status) {
+      if (status == google.maps.places.PlacesServiceStatus.OK) {
+        $scope.spotDetails = place;
+        console.log($scope.spotDetails);
+      }
+    }
+  }
+
+  //Function that sends a query to the database for a plan based on plan ID.
   $scope.getOnePlan = function(){
+    //get the id of the plan in context from the cookies.
     var id = $cookies.get('currentPlanId')
     var url = '/api/plans/' + id;
 
     $http.get(url).then(function(response){
+      //Put the returning plan in an object on the scope so we can use two way binding to show it on the view.
       $scope.showPlan = response.data;
       });
   }
+  //On refresh this will bring the plan back from the database.
   $scope.getOnePlan();
 
 
@@ -188,6 +221,7 @@ chaloApp.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
     autocomplete.bindTo('bounds', map);
 
 
+    service = new google.maps.places.PlacesService(map);
 
 
 
@@ -206,7 +240,9 @@ chaloApp.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
       infowindow.close();
       marker.setVisible(false);
       $scope.place = autocomplete.getPlace();
-      console.log($scope.place);
+      $scope.spot = {name:$scope.place.name, place_id:$scope.place.place_id, geometry:$scope.place.geometry}
+      console.log($scope.spot);
+
       if (!$scope.place.geometry) {
         window.alert("Autocomplete's returned place contains no geometry");
         return;
