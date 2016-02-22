@@ -1,6 +1,6 @@
 
 
-var chaloApp = angular.module('chaloApp', ['ngCookies', 'ngRoute', 'ngMessages']);
+var chaloApp = angular.module('chaloApp', ['ngCookies', 'ngRoute', 'ngMessages', 'ui.bootstrap']);
 
 chaloApp.config(function($routeProvider){
 
@@ -89,21 +89,58 @@ chaloApp.controller('homeController', ['$scope', '$rootScope', '$http', '$cookie
 
 }]);
 
-chaloApp.controller('planController', ['$scope', '$rootScope', '$http', '$cookies', '$location', '$compile', function($scope, $rootScope, $http, $cookies, $location, $compile){
 
-  var logInUserId = $cookies.get('logInUserId')
-  $scope.newPlan = {title:'', userId: logInUserId}
-  var currentTitle = $cookies.get('currentTitle')
-  $scope.showPlan = {title: currentTitle, userId: logInUserId, spots:[{}]}
-  $scope.currentUserPlans = [];
-  $scope.plans = [];
-  //From the Google Autofill object in initializeMap Function
-  $scope.place = {};
-  //Only some of things to be added to the DB. Too much comes back from Google to be storing in your own DB.
-  $scope.spot = {};
-  //the object which holds the getDetails method call response from Google
-  $scope.spotDetails = {};
-  var service;
+
+chaloApp.controller('planController', ['$scope', '$rootScope', '$http', '$cookies', '$location', '$compile', '$uibModal', function($scope, $rootScope, $http, $cookies, $location, $compile, $uibModal){
+
+    var logInUserId = $cookies.get('logInUserId')
+    $scope.newPlan = {title:'', userId: logInUserId}
+    var currentTitle = $cookies.get('currentTitle')
+    $scope.showPlan = {title: currentTitle, userId: logInUserId, spots:[{}]}
+    $scope.currentUserPlans = [];
+    $scope.plans = [];
+    //From the Google Autofill object in initializeMap Function
+    $scope.place = {};
+    //Only some of things to be added to the DB. Too much comes back from Google to be storing in your own DB.
+    $scope.spot = {};
+    //the object which holds the getDetails method call response from Google
+    $scope.spotDetails = {};
+    var service;
+
+
+
+
+
+
+  //This is for show page when user clicks on a spot, We should get details from Google.
+   $scope.getSpotDetails = function(spot){
+      var request = {
+        placeId: spot.place_id
+      };
+
+      service.getDetails(request, callback);
+
+      function callback(place, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+          $scope.spotDetails = place;
+          console.log($scope.spotDetails);
+
+          var modalInstance = $uibModal.open({
+            templateUrl: 'myModalContent.html',
+            controller: 'ModalInstanceCtrl',
+            resolve: {
+              spotDetails: function () {
+                return $scope.spotDetails;
+              }
+            }
+          });
+        }
+      }
+
+   };
+
+
+
 
   $scope.getPlans = function(){
     $http.get('/api/plans').then(function(response){
@@ -169,21 +206,6 @@ chaloApp.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
     $scope.getOnePlan();
   }
 
-  //This is for show page when user clicks on a spot, We should get details from Google.
-  $scope.getSpotDetails = function(spot){
-    var request = {
-      placeId: spot.place_id
-    };
-
-    service.getDetails(request, callback);
-
-    function callback(place, status) {
-      if (status == google.maps.places.PlacesServiceStatus.OK) {
-        $scope.spotDetails = place;
-        console.log($scope.spotDetails);
-      }
-    }
-  }
 
   //Function that sends a query to the database for a plan based on plan ID.
   $scope.getOnePlan = function(){
@@ -285,3 +307,15 @@ chaloApp.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
   } // Initialize Map ends here.
 
 }]);
+
+
+chaloApp.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, spotDetails) {
+
+  $scope.spotDetails = spotDetails;
+
+
+  $scope.ok = function () {
+    $uibModalInstance.close();
+  };
+
+});

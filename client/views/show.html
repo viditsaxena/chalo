@@ -17,31 +17,25 @@
                 </div>
 
                   <div class="list-group">
-                    <a  data-toggle="modal" data-target="#myModal" ng-click="getSpotDetails(spot)" class="list-group-item" ng-repeat="spot in showPlan.spots">
+                    <a  href="#" ng-click="$event.preventDefault(); getSpotDetails(spot)" class="list-group-item" ng-repeat="spot in showPlan.spots">
                       <h4 class="list-group-item-heading">{{ spot.name }}</h4>
                       <p class="list-group-item-text">Recommended by Leo Messi</p>
                     </a>
                  </div>
 
 
-                 <!-- Modal -->
-                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                   <div class="modal-dialog" role="document">
-                     <div class="modal-content">
-                       <div class="modal-header">
-                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                         <h4 class="modal-title" id="myModalLabel"></h4>
-                       </div>
-                       <div class="modal-body">
-                         {{ spotDetails.name }}
-                       </div>
-                       <div class="modal-footer">
-                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                         <button type="button" class="btn btn-primary">Save changes</button>
-                       </div>
+                 <script type="text/ng-template" id="myModalContent.html">
+                     <div class="modal-header">
+                         <h3 class="modal-title">{{ spotDetails.name }}</h3>
                      </div>
-                   </div>
-                 </div>
+                     <div class="modal-body">
+                         <b>{{ spotDetails.url  }}</b>
+                     </div>
+                     <div class="modal-footer">
+                         <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+                     </div>
+                 </script>
+
 
             </div>
         </div>
