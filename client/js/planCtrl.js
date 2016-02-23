@@ -2,12 +2,12 @@ var planCtrl = angular.module('planCtrl', ['geolocation']);
 
 planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookies', '$location', '$compile', '$uibModal', 'geolocation',  function($scope, $rootScope, $http, $cookies, $location, $compile, $uibModal, geolocation){
 
-    $scope.newPlan = {title:'', userId: logInUserId}
     $scope.currentUserPlans = [];
     $scope.plans = [];
 
-    var logInUserId = $cookies.get('logInUserId')
-    var currentTitle = $cookies.get('currentTitle')
+    var logInUserId = $cookies.get('logInUserId');
+    $scope.newPlan = {title:'', userId: logInUserId}
+    var currentTitle = $cookies.get('currentTitle');
     $scope.showPlan = {title: currentTitle, userId: logInUserId, spots:[{}]}
     //From the Google Autofill object in initializeMap Function
     $scope.place = {};
@@ -17,8 +17,7 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
     $scope.spotDetails = {};
     var service;
     $scope.locations = [];
-
-
+    $scope.mapCenter = {lat: 34.5133, lng: -94.1629};
 
 
 
@@ -94,6 +93,14 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
     $scope.addSpotToDatabase();
   };
 
+  $scope.refresh = function(){
+
+            var spots = $scope.showPlan.spots;
+            $scope.convertToMapPoints(spots);
+
+            // $scope.initializeMap();
+
+      };
   //function that updates the database anytime a new spot is added.
   $scope.addSpotToDatabase = function(){
         //get the latest info on a plan.
@@ -103,6 +110,8 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
         var url = '/api/plans/' + id;
         $http.patch(url, plan).then(function(response){
             $scope.showPlan = response.data;
+            var lastElement = $scope.showPlan.spots[$scope.showPlan.spots.length - 1]
+            $scope,mapCenter = {lat: lastElement.geometry.location.lat, lng: lastElement.geometry.location.lng}
             $scope.refresh();
         });
   }
@@ -110,11 +119,14 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
   $scope.selectOnePlan = function(plan){
     //remove whatever is stored in cookies
     $cookies.remove('currentPlanId');
+    $cookies.remove('currentTitle');
+
     console.log(plan);
     //put the id of the plan clicked in the cookies.
     $cookies.put('currentPlanId', plan._id);
+    $cookies.put('currentTitle', plan.title);
     //call the function that queries for a plan from the database using plan id.
-    $scope.getOnePlan();
+    // $scope.getOnePlan();
   }
 
 
@@ -127,22 +139,20 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
     $http.get(url).then(function(response){
         //Put the returning plan in an object on the scope so we can use two way binding to show it on the view.
         $scope.showPlan = response.data;
-        $scope.refresh();
+        console.log($scope.showPlan);
+          if ($scope.showPlan.spots.length){
+            var lastElement = $scope.showPlan.spots[$scope.showPlan.spots.length - 1]
+            $scope,mapCenter = {lat: lastElement.geometry.location.lat, lng: lastElement.geometry.location.lng}
+            $scope.refresh();
+          } else {
+          $scope.refresh();
+          }
     });
   }
   //On refresh this will bring the plan back from the database.
   $scope.getOnePlan();
 
-// -----------------------------------------------------------------------------
 
-  $scope.refresh = function(){
-
-            var spots = $scope.showPlan.spots;
-            $scope.convertToMapPoints(spots);
-
-            $scope.initializeMap();
-
-      };
 
       // Private Inner Functions
       // --------------------------------------------------------------
@@ -175,6 +185,8 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
                   placeId: spot.place_id
               });
           }
+
+          $scope.initializeMap();
   };
 
 
@@ -185,36 +197,13 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
   $scope.initializeMap = function() {
 
     // If map has not been created already...
-    if (!map){
+    // if (!map){
         // Create a new map and place in the index.html page
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 34.5133, lng: -94.1629},
+          center: $scope.mapCenter,
           zoom: 2
         });
-    }
-
-
-    // Loop through each location in the array and place a marker
-    $scope.locations.forEach(function(n, i){
-        var marker = new google.maps.Marker({
-            position: n.latlon,
-            map: map,
-            title: "Big Map",
-            icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-        });
-
-        // For each marker created, add a listener that checks for clicks
-        google.maps.event.addListener(marker, 'click', function(e){
-
-            // When clicked, open the selected marker's message
-            currentSelectedMarker = n;
-            n.message.open(map, marker);
-        });
-    });
-
-
-
-    // AUTO-COMPLETE
+    // }
     var input = /** @type {!HTMLInputElement} */(
         document.getElementById('pac-input'));
 
@@ -227,7 +216,6 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
 
 
     service = new google.maps.places.PlacesService(map);
-
 
 
     // INFO-WINDOW
@@ -286,6 +274,28 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
       infowindow.open(map, marker);
 
     });
+
+
+
+    // Loop through each location in the array and place a marker
+    $scope.locations.forEach(function(n, i){
+        var marker = new google.maps.Marker({
+            position: n.latlon,
+            map: map,
+            title: "Big Map",
+            icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+        });
+
+        // For each marker created, add a listener that checks for clicks
+        google.maps.event.addListener(marker, 'click', function(e){
+
+            // When clicked, open the selected marker's message
+            currentSelectedMarker = n;
+            n.message.open(map, marker);
+        });
+    });
+
+
 
   } // Initialize Map ends here.
 
