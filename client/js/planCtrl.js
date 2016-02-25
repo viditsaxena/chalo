@@ -18,6 +18,7 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
     var service;
     $scope.locations = [];
     $scope.mapCenter = {lat: 34.5133, lng: -94.1629};
+    var map;
 
 
 
@@ -93,14 +94,6 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
     $scope.addSpotToDatabase();
   };
 
-  $scope.refresh = function(){
-
-            var spots = $scope.showPlan.spots;
-            $scope.convertToMapPoints(spots);
-
-            // $scope.initializeMap();
-
-      };
   //function that updates the database anytime a new spot is added.
   $scope.addSpotToDatabase = function(){
         //get the latest info on a plan.
@@ -142,25 +135,34 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
         console.log($scope.showPlan);
           if ($scope.showPlan.spots.length){
             var lastElement = $scope.showPlan.spots[$scope.showPlan.spots.length - 1]
-            $scope,mapCenter = {lat: lastElement.geometry.location.lat, lng: lastElement.geometry.location.lng}
+            $scope.mapCenter = {lat: lastElement.geometry.location.lat, lng: lastElement.geometry.location.lng}
             $scope.refresh();
           } else {
-          $scope.refresh();
+            $scope.initializeMap();
           }
     });
   }
   //On refresh this will bring the plan back from the database.
-  $scope.getOnePlan();
+  angular.element(document).ready(function () {
+        $scope.getOnePlan();
+    });
 
+  $scope.refresh = function(){
 
+            $scope.locations = [];
+            var spots = $scope.showPlan.spots;
+            $scope.locations = $scope.convertToMapPoints(spots);
+
+            $scope.initializeMap();
+
+      };
 
       // Private Inner Functions
       // --------------------------------------------------------------
       // Convert a JSON of users into map points
   $scope.convertToMapPoints = function(spots){
 
-          // Clear the locations holder
-          $scope.locations = [];
+          var locations = [];
 
           // Loop through all of the JSON entries provided in the response
           for(var i= 0; i < spots.length; i++) {
@@ -175,7 +177,7 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
               //     '</p>';
 
               // Converts each of the JSON records into Google Maps Location format (Note [Lat, Lng] format).
-              $scope.locations.push({
+              locations.push({
                   latlon: new google.maps.LatLng(spot.geometry.location.lat, spot.geometry.location.lng),
                   message: new google.maps.InfoWindow({
                       content: "Content will be coming soon",
@@ -185,8 +187,8 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
                   placeId: spot.place_id
               });
           }
-
-          $scope.initializeMap();
+          // location is now an array populated with records in Google Maps format
+          return locations;
   };
 
 
@@ -197,19 +199,39 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
   $scope.initializeMap = function() {
 
     // If map has not been created already...
-    // if (!map){
+    if (!map){
         // Create a new map and place in the index.html page
-        var map = new google.maps.Map(document.getElementById('map'), {
+          map = new google.maps.Map(document.getElementById('map'), {
           center: $scope.mapCenter,
           zoom: 2
         });
-    // }
+    }
+
+    // Loop through each location in the array and place a marker
+    $scope.locations.forEach(function(n, i){
+        var marker = new google.maps.Marker({
+            position: n.latlon,
+            map: map,
+            title: "Big Map",
+            icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
+        });
+
+        // For each marker created, add a listener that checks for clicks
+        google.maps.event.addListener(marker, 'click', function(e){
+
+            // When clicked, open the selected marker's message
+            currentSelectedMarker = n;
+            n.message.open(map, marker);
+        });
+    });
+
+
     var input = /** @type {!HTMLInputElement} */(
         document.getElementById('pac-input'));
 
     var types = document.getElementById('type-selector');
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
+    // map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
+    // map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
 
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo('bounds', map);
@@ -273,29 +295,7 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
       infowindow.setContent(compiled[0]);
       infowindow.open(map, marker);
 
-    });
-
-
-
-    // Loop through each location in the array and place a marker
-    $scope.locations.forEach(function(n, i){
-        var marker = new google.maps.Marker({
-            position: n.latlon,
-            map: map,
-            title: "Big Map",
-            icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-        });
-
-        // For each marker created, add a listener that checks for clicks
-        google.maps.event.addListener(marker, 'click', function(e){
-
-            // When clicked, open the selected marker's message
-            currentSelectedMarker = n;
-            n.message.open(map, marker);
-        });
-    });
-
-
+      });
 
   } // Initialize Map ends here.
 
