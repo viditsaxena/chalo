@@ -1,6 +1,6 @@
 
 
-var chaloApp = angular.module('chaloApp', ['planCtrl', 'geolocation', 'ngCookies', 'ngRoute', 'ngMessages', 'ui.bootstrap']);
+var chaloApp = angular.module('chaloApp', ['planCtrl', 'gservice', 'ngCookies', 'ngRoute', 'ngMessages', 'ui.bootstrap']);
 
 chaloApp.config(function($routeProvider){
 
@@ -20,20 +20,21 @@ chaloApp.config(function($routeProvider){
     })
     .when('/create', {
       templateUrl: './views/create.html',
-      controller: 'planController'
+      controller: 'resourcesController'
     })
     .when('/plans', {
       templateUrl: './views/plans.html',
-      controller: 'planController'
+      controller: 'resourcesController'
+    })
+    .when('/myplans', {
+      templateUrl: './views/myplans.html',
+      controller: 'resourcesController'
     })
     .when('/show', {
       templateUrl: './views/show.html',
       controller: 'planController'
     })
-    .when('/myplans', {
-      templateUrl: './views/myplans.html',
-      controller: 'planController'
-    })
+
 });
 
 chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookies', '$location', function($scope, $rootScope, $http, $cookies, $location){
@@ -82,6 +83,66 @@ $rootScope.token = $cookies.get('token');
       $scope.logInUser = {};
       $location.path('/')
     };
+
+}]);
+
+chaloApp.controller('resourcesController', ['$scope', '$rootScope', '$http', '$cookies', '$location', function($scope, $rootScope, $http, $cookies, $location){
+
+  $scope.currentUserPlans = [];
+  $scope.plans = [];
+  var logInUserId = $cookies.get('logInUserId');
+  $scope.newPlan = {title:'', userId: logInUserId}
+
+  $scope.getPlans = function(){
+    $http.get('/api/plans').then(function(response){
+      $scope.plans = response.data;
+    });
+  }
+  $scope.getPlans();
+
+
+  $scope.getCurrentUserPlans = function(){
+
+    var url = '/api/plans/search?userId=' + logInUserId;
+    $http.get(url).then(function(response){
+      $scope.currentUserPlans = response.data;
+    });
+  }
+  $scope.getCurrentUserPlans();
+
+  $scope.addPlan = function(){
+    $http({
+      url: '/api/plans',
+      method: 'post',
+      headers:{
+        token: $rootScope.token
+      },
+      data: $scope.newPlan
+    }).then(function(response){
+      //Get the title and id of the added plan and store it in cookies for use later.
+      $cookies.put('currentTitle', response.data.title);
+      $cookies.put('currentPlanId', response.data._id);
+      $scope.newPlan = {title: '', userId: logInUserId};
+      $location.path('/show')
+    });
+  };
+
+  //This is for myPlans or Browse Plans section, when user clicks on a plan.
+  $scope.selectOnePlan = function(plan){
+    //remove whatever is stored in cookies
+    $cookies.remove('currentPlanId');
+    $cookies.remove('currentTitle');
+
+    console.log(plan);
+    //put the id of the plan clicked in the cookies.
+    $cookies.put('currentPlanId', plan._id);
+    // $rootScope.planId = plan._id;
+    $cookies.put('currentTitle', plan.title);
+    $location.path('/show')
+
+  }
+
+
 
 }]);
 
