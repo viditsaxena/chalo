@@ -74,11 +74,14 @@ angular.module('gservice', [])
                      zoom: 2
                    });
                }
+               var bounds = new google.maps.LatLngBounds();
 
                // Loop through each location in the array and place a marker
                locations.forEach(function(n, i){
+                   var position = n.latlon;
+                   bounds.extend(position);
                    var marker = new google.maps.Marker({
-                       position: n.latlon,
+                       position: position,
                        map: map,
                        title: "Big Map",
                        icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
@@ -91,7 +94,15 @@ angular.module('gservice', [])
                        currentSelectedMarker = n;
                        n.message.open(map, marker);
                    });
+                   // Automatically center the map fitting all markers on the screen
+                   map.fitBounds(bounds);
                });
+
+              //  Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+              //  var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+              //      this.setZoom(14);
+              //      google.maps.event.removeListener(boundsListener);
+              //  });
 
 
                var input = /** @type {!HTMLInputElement} */(
@@ -127,14 +138,14 @@ angular.module('gservice', [])
                    window.alert("Autocomplete's returned place contains no geometry");
                    return;
                  }
-
-                 // If the place has a geometry, then present it on a map.
-                 if ($rootScope.place.geometry.viewport) {
-                   map.fitBounds($rootScope.place.geometry.viewport);
-                 } else {
-                   map.setCenter($rootScope.place.geometry.location);
-                   map.setZoom(12);  // Why 17? Because it looks good.
-                 }
+                 map.fitBounds(bounds);
+                //  If the place has a geometry, then present it on a map.
+                //  if ($rootScope.place.geometry.viewport) {
+                //    map.fitBounds($rootScope.place.geometry.viewport);
+                //  } else {
+                //    map.setCenter($rootScope.place.geometry.location);
+                //    map.setZoom(5);  // Why 17? Because it looks good.
+                //  }
                  marker.setIcon(/** @type {google.maps.Icon} */({
                    url: $rootScope.place.icon,
                    size: new google.maps.Size(71, 71),
