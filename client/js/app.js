@@ -57,6 +57,7 @@ chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookie
     $scope.instantLogin = function(){
       $http.post("/api/users/authentication_token", $scope.newUser).then(function(reponse){
         $rootScope.token = reponse.data.token;
+        console.log(reponse.data.token);
         $cookies.put('token', $rootScope.token);
         $cookies.put('logInUserId', reponse.data.id);
         $scope.newUser = {};

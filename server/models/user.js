@@ -17,7 +17,6 @@ var mongoose    =    require('mongoose'),
       created_at: {type: Date, default: Date.now},
       updated_at: {type: Date, default: Date.now}
 });
-  
 
 
     // pre-save "hook"
@@ -31,6 +30,7 @@ var mongoose    =    require('mongoose'),
       }
 
       // Sets the created_at parameter equal to the current time
+      // https://scotch.io/tutorials/making-mean-apps-with-google-maps-part-i
       now = new Date();
       this.updated_at = now;
       if(!this.created_at) {
@@ -45,10 +45,10 @@ var mongoose    =    require('mongoose'),
       return "On my own... pretending he's beside me...";
     };
 
-    UserSchema.methods.generateToken = function(){
-      var user = this;
-      user.token = randToken.generate(16);
-    };
+    // UserSchema.methods.generateToken = function(){
+    //   var user = this;
+    //   user.token = randToken.generate(16);
+    // };
 
     // helpful method to check if password is correct
     UserSchema.methods.authenticate = function(password, next){

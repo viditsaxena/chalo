@@ -8,8 +8,9 @@
 
   var app = express();
 
+
 // Database
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/chalo');
+  mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/chalo');
 
 
   // *** Server Logging ***
@@ -27,14 +28,6 @@ mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/chalo');
   app.get('/', function(req, res){
     res.sendFile(__dirname + '/client/index.html');
   });
-
-  // app.get('/new', function(req, res){
-  //   res.sendFile(__dirname + '/client/new.html');
-  // });
-
-  // app.get('/plan', function(req, res){
-  //   res.sendFile(__dirname + '/client/views/plan.html');
-  // });
 
 
   // *** Routing/Controllers ***
