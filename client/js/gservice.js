@@ -4,6 +4,7 @@ angular.module('gservice', [])
 
       // Initialize Variables
              // -------------------------------------------------------------
+             $rootScope.token = $cookies.get('token');
              // Service our factory will return
              var googleMapService = {};
 
@@ -24,7 +25,13 @@ angular.module('gservice', [])
 
                  var url = '/api/plans/' + id;
 
-                 $http.get(url).then(function(response){
+                 $http({
+                   url: url,
+                   method: 'get',
+                   headers:{
+                     'x-access-token': $rootScope.token
+                   }
+                 }).then(function(response){
                      // Convert the results into Google Map Format
                      locations = convertToMapPoints(response.data.spots);
 

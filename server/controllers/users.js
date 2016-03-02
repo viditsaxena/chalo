@@ -35,7 +35,7 @@ var express  =  require('express'),
               if(isMatch){
                 // if user is found and password is right
                 // create a token with full user object. This is fine because password is hashed. JWT are not encrypted only encoded.
-                var token = jwt.sign(user, secret.superSecret, {
+                var token = jwt.sign({email: user.email}, secret.superSecret, {
                   expiresIn: 1440 // expires in 24 hours
                 });
                 // set the user token in the database
@@ -44,6 +44,7 @@ var express  =  require('express'),
                   // return the information including token as JSON
                   res.json({
                     success: true,
+                    id: user._id,
                     message: 'Enjoy your token!',
                     token: token
                   });

@@ -70,6 +70,7 @@ chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookie
       $http.post("/api/users/authentication_token", $scope.logInUser).then(function(reponse){
         $rootScope.token = reponse.data.token;
         $cookies.put('token', $rootScope.token);
+        console.log($cookies.get('token'));
         $cookies.put('logInUserId', reponse.data.id);
         $location.path('/')
       });
@@ -93,9 +94,18 @@ chaloApp.controller('resourcesController', ['$scope', '$rootScope', '$http', '$c
   $scope.plans = [];
   var logInUserId = $cookies.get('logInUserId');
   $scope.newPlan = {title:'', userId: logInUserId}
+  $rootScope.token = $cookies.get('token');
+  console.log($rootScope.token);
+
 
   $scope.getPlans = function(){
-    $http.get('/api/plans').then(function(response){
+    $http({
+      url: '/api/plans',
+      method: 'get',
+      headers:{
+        'x-access-token': $rootScope.token
+      }
+    }).then(function(response){
       $scope.plans = response.data;
     });
   }
@@ -105,7 +115,13 @@ chaloApp.controller('resourcesController', ['$scope', '$rootScope', '$http', '$c
   $scope.getCurrentUserPlans = function(){
 
     var url = '/api/plans/search?userId=' + logInUserId;
-    $http.get(url).then(function(response){
+    $http({
+      url: url,
+      method: 'get',
+      headers:{
+        'x-access-token': $rootScope.token
+      }
+    }).then(function(response){
       $scope.currentUserPlans = response.data;
     });
   }
@@ -116,7 +132,7 @@ chaloApp.controller('resourcesController', ['$scope', '$rootScope', '$http', '$c
       url: '/api/plans',
       method: 'post',
       headers:{
-        token: $rootScope.token
+        'x-access-token': $rootScope.token
       },
       data: $scope.newPlan
     }).then(function(response){

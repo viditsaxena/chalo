@@ -14,8 +14,8 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
     // $scope.locations = [];
     $rootScope.mapCenter = {lat: 34.5133, lng: -94.1629};
 
-
-
+    $rootScope.token = $cookies.get('token');
+    console.log($rootScope.token);
 
 
   // This is for show page when user clicks on a spot, We should get details from Google.
@@ -54,9 +54,13 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
     //get the id of the plan in context from the cookies.
     var id = $cookies.get('currentPlanId')
     var url = '/api/plans/' + id;
-    // $rootScope.planId = $cookies.get('currentPlanId');
-
-    $http.get(url).then(function(response){
+    $http({
+      url: url,
+      method: 'get',
+      headers:{
+        'x-access-token': $rootScope.token
+      }
+    }).then(function(response){
         //Put the returning plan in an object on the scope so we can use two way binding to show it on the view.
         $rootScope.showPlan = response.data;
         console.log($rootScope.showPlan);
