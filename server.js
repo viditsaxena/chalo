@@ -5,11 +5,11 @@
       morgan      =    require('morgan');
 
 
-
+  //Create our namespace
   var app = express();
 
 
-// Database
+// Connect to your database
   mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/chalo');
 
 
@@ -24,7 +24,7 @@
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({extended: true}));
 
-  // Routes
+  // Routes-
   app.get('/', function(req, res){
     res.sendFile(__dirname + '/client/index.html');
   });

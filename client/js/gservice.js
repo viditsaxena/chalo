@@ -102,7 +102,7 @@ angular.module('gservice', [])
                        n.message.open(map, marker);
                    });
                    // Automatically center the map fitting all markers on the screen
-                   map.fitBounds(bounds);
+                     map.fitBounds(bounds);
                });
 
               //  Override our map zoom level once our fitBounds function runs (Make sure it only runs once)

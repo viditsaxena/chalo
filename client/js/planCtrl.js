@@ -89,7 +89,15 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
         //get the plan ID so we can send it to the right route.
         var id = $cookies.get('currentPlanId')
         var url = '/api/plans/' + id;
-        $http.patch(url, plan).then(function(response){
+  
+        $http({
+          url: url,
+          method: 'patch',
+          headers:{
+            'x-access-token': $rootScope.token
+          },
+          data: plan
+        }).then(function(response){
             $rootScope.showPlan = response.data;
             var lastElement = $rootScope.showPlan.spots[$rootScope.showPlan.spots.length - 1]
             $rootScope,mapCenter = {lat: lastElement.geometry.location.lat, lng: lastElement.geometry.location.lng}

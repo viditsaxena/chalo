@@ -40,15 +40,7 @@ var mongoose    =    require('mongoose'),
       next();
     });
 
-    // method all users should have
-    UserSchema.methods.sing = function(){
-      return "On my own... pretending he's beside me...";
-    };
 
-    // UserSchema.methods.generateToken = function(){
-    //   var user = this;
-    //   user.token = randToken.generate(16);
-    // };
 
     // helpful method to check if password is correct
     UserSchema.methods.authenticate = function(password, next){
