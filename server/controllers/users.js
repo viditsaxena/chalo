@@ -10,10 +10,20 @@ var express  =  require('express'),
 
     // Create a new user and return as json for POST to '/api/users'
     usersRouter.post('/', function (req, res) {
-      var user = new User(req.body);
-      user.save(function(){ //pre-save hook will be run before user gets saved. See user model.
-        res.json({user : user, message: "Thank You for Signing Up"});
+      User.findOne({
+        email: req.body.email
+      }, function(err, user) {
 
+        //if the user is found
+        if (user) {
+          res.json({ success: false, message: 'User already exists. Please log in.' });
+
+        } else if (!user) {
+          var newUser = new User(req.body);
+          newUser.save(function(){ //pre-save hook will be run before user gets saved. See user model.
+          res.json({success: true, user : newUser, message: "Thank You for Signing Up"});
+          });
+        }
       });
     });
 

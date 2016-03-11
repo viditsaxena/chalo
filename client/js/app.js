@@ -48,10 +48,12 @@ chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookie
 
     $scope.createUser = function(){
       $http.post('/api/users', $scope.newUser).then(function(response){
-        $scope.users.push(response.data);
-        // $scope.newUser = {};
-        $scope.instantLogin();
-        // $location.path('/login');
+        //if a user already exists
+          if (!response.data.success){
+            alert(response.data.message)
+          } else {
+            $scope.instantLogin();
+          }
       });
     };
     $scope.instantLogin = function(){
@@ -67,12 +69,18 @@ chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookie
 
 
     $scope.obtainToken = function(){
-      $http.post("/api/users/authentication_token", $scope.logInUser).then(function(reponse){
-        $rootScope.token = reponse.data.token;
+      $http.post("/api/users/authentication_token", $scope.logInUser).then(function(response){
+        $rootScope.token = response.data.token;
         $cookies.put('token', $rootScope.token);
         console.log($cookies.get('token'));
-        $cookies.put('logInUserId', reponse.data.id);
+        $cookies.put('logInUserId', response.data.id);
+        //if login is not successful
+        if (!response.data.success){
+          alert(response.data.message)
+        //redirect the user to homepage if the user if successfully logged in.
+        } else if ($rootScope.token){
         $location.path('/')
+        }
       });
     };
     //This is so if someone refreshes while logged in the rootscope get populated with the cookie token again.
