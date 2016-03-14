@@ -1,34 +1,25 @@
 
-html {
+
+html,
+body {
   height: 100%;
 }
-
 body {
-    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-    height: 100%;
+  color: #fff;
+  text-align: center;
+  /*text-shadow: 0 1px 3px rgba(0,0,0,.5);*/
+  background-color: #9d9d9d
 }
 
 .routePages{
   height: 100%;
+  /*padding-top: 100px;*/
+}
+.page-header{
+  color: black;
 }
 
-.navbar-inverse {
-  background-color: crimson;
-}
 
-.navbar-inverse .navbar-brand {
-    color: white;
-}
-
-.navbar-inverse .navbar-nav>li>a {
-    color: white;
-}
-
-.page-header {
-    padding-bottom: 5px;
-    margin: 30px 0 20px;
-    border-bottom: 0px solid #eee;
-}
 
 /*Inputs and Buttons*/
 .city-button {
@@ -39,6 +30,86 @@ body {
   margin-left: 20px
 }
 
+
+/*********************NAVIGATION************************/
+.navbar-custom {
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(255,255,255,.3);
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color: #000;
+}
+
+.navbar-custom .navbar-brand {
+    font-weight: 700;
+}
+
+.navbar-custom .navbar-brand:focus {
+    outline: 0;
+}
+
+.navbar-custom .navbar-brand .navbar-toggle {
+    padding: 4px 6px;
+    font-size: 16px;
+    color: #fff;
+}
+
+.navbar-custom .navbar-brand .navbar-toggle:focus,
+.navbar-custom .navbar-brand .navbar-toggle:active {
+    outline: 0;
+}
+
+.navbar-custom a {
+    color: white;
+}
+
+.navbar-custom .nav li a {
+    -webkit-transition: background .3s ease-in-out;
+    transition: background .3s ease-in-out;
+}
+
+.navbar-custom .nav li a:hover {
+    outline: 0;
+    color: rgba(255,255,255,.8);
+    background-color: transparent;
+}
+
+.navbar-custom .nav li a:focus,
+.navbar-custom .nav li a:active {
+    outline: 0;
+    background-color: transparent;
+}
+
+.navbar-custom .nav li.active {
+    outline: 0;
+}
+
+.navbar-custom .nav li.active a {
+    background-color: rgba(255,255,255,.3);
+}
+
+.navbar-custom .nav li.active a:hover {
+    color: red;
+}
+
+@media(min-width:768px) {
+    .navbar-custom {
+        padding: 20px 0;
+        border-bottom: 0;
+        letter-spacing: 1px;
+        background: 0 0;
+        -webkit-transition: background .5s ease-in-out,padding .5s ease-in-out;
+        transition: background .5s ease-in-out,padding .5s ease-in-out;
+    }
+
+    .navbar-custom.top-nav-collapse {
+        padding: 0;
+        border-bottom: 1px solid rgba(255,255,255,.3);
+        background: #000;
+    }
+}
+
+/*********************NAVIGATION************************/
+
 /*SignUp and Login Forms*/
 
 
@@ -46,7 +117,7 @@ body {
   /*margin-top: 10%;*/
   padding-top: 20px;
   padding-bottom: 20px;
-  background-color: #eee;
+  background-color: #9d9d9d;
 }
 .help-block p{
   color: black;
@@ -95,6 +166,9 @@ body {
 
 /*Signup and Login Form Ends*/
 
+.plus-icon {
+  text-align: center;
+}
 footer {
     margin: 50px 0;
 }

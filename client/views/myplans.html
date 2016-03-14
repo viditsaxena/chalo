@@ -1,21 +1,33 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
-<!--
-http://stackoverflow.com/questions/23957974/writing-a-rest-api-for-complex-nested-data
 
-https://scotch.io/tutorials/use-expressjs-to-get-url-and-post-parameters
-
-https://www.google.com/search?q=express+js+query+parameter&oq=express+js+query+&aqs=chrome.1.69i57j0l5.8527j1j4&sourceid=chrome&es_sm=91&ie=UTF-8
-
-http://junerockwell.com/difference-parameters-query-strings-express-js/ -->
+<div class="container form-section">
 
 
-<!-- https://scotch.io/tutorials/making-mean-apps-with-google-maps-part-i -->
+<div class="row">
+  <div class="col-md-6 col-sm-offset-3 list-group">
+    <a href="#" ng-click="$event.preventDefault(); selectOnePlan(plan)" class="list-group-item" ng-repeat="plan in currentUserPlans">
+      <h4 class="list-group-item-heading">{{ plan.title }}</h4>
+      <!-- <p class="list-group-item-text">{{ plan.userId }}</p> -->
+    </a>
+  </div>
+
+</div>
+
+  <div class="row">
+
+    <div class="plus-icon">
+      <a href="#/create"><i class="fa fa-plus-square fa-5x"></i></a>
+    </div>
+
+  </div>
 
 
-<div class="list-group">
-  <a href="#" ng-click="$event.preventDefault(); selectOnePlan(plan)" class="list-group-item" ng-repeat="plan in currentUserPlans">
-    <h4 class="list-group-item-heading">{{ plan.title }}</h4>
-    <p class="list-group-item-text">{{ plan.userId }}</p>
-  </a>
 </div>

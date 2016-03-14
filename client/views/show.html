@@ -1,23 +1,26 @@
 
-    <div id="plan-page" class="row content">
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div id="plan-page" class="row content">
 
 
-        <input id="pac-input" class="controls" type="text"
-              placeholder="Enter a location">
-        <!-- Google Map -->
-        <div id="map-section" class="col-md-9">
-          <div id="map" style="width:800px; height:645px"></div>
-        </div>
+
         <!-- Side Panel -->
         <div class="col-md-3">
             <div class="panel panel-default">
+              <input id="pac-input" class="controls" type="text"
+              placeholder="Enter a location">
                 <!-- Panel Title -->
                 <div class="panel-heading">
                     <h2 class="panel-title text-center">{{ showPlan.title }} <span class="glyphicon glyphicon-map-marker"></span></h2>
                 </div>
 
                   <div class="list-group">
-                    <a  href="#" ng-click="$event.preventDefault(); getSpotDetails(spot)" class="list-group-item" ng-repeat="spot in showPlan.spots">
+                    <a  href="#" ng-click="$event.preventDefault(); getSpotDetails(spot.place_id)" class="list-group-item" ng-repeat="spot in showPlan.spots">
                       <h4 class="list-group-item-heading">{{ spot.name }}</h4>
                       <p class="list-group-item-text">Recommended by Leo Messi</p>
                     </a>
@@ -29,7 +32,15 @@
                          <h3 class="modal-title">{{ spotDetails.name }}</h3>
                      </div>
                      <div class="modal-body">
-                         <b>{{ spotDetails.url  }}</b>
+                         <p>Address - {{ spotDetails.formatted_address  }}</p>
+                         <hr>
+                         <p>Rating - {{ spotDetails.rating  }}</p>
+                         <hr>
+                         <div>
+                         <button class="btn btn-default" type="button" ng-click="previousPic()"><</button>
+                         <img ng-src="{{ imgUrl }}" alt="No Images Available" />
+                         <button class="btn btn-default" type="button" ng-click="nextPic()">></button>
+                         </div>
                      </div>
                      <div class="modal-footer">
                          <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
@@ -39,5 +50,10 @@
 
             </div>
         </div>
-    </div>
+
+        <!-- Google Map -->
+        <div id="map-section" class="col-md-9">
+          <div id="map" style="width:100%; height:100%"></div>
+        </div>
+</div>
     <hr/>

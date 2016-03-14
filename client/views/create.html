@@ -1,3 +1,10 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 <div class="container form-section">
 
   <div class="row">
@@ -6,35 +13,25 @@
 
 
       <form ng-submit="addPlan()" class="form-horizontal form-plan" name="planCreateForm">
-        <h2 class="form-signin-heading">Add a Plan</h2>
-        <!-- <br><br><br><br> -->
 
         <div class="form-group">
-          <label for="planTitle" class="col-sm-2 control-label">Plan Title</label>
+          <label for="planTitle" class="col-sm-2 control-label"></label>
+          <div class="col-sm-10">
+          <h2 class="form-signin-heading">Add a Plan</h2>
+          </div>
+        </div>
+        <div class="form-group">
+            <label for="planTitle" class="col-sm-2 control-label">Plan Title</label>
           <div class="col-sm-10">
             <input type="text" class="form-control" placeholder="eg-Cape Town Mar 2016" ng-model="newPlan.title" id="planTitle" required>
           </div>
         </div>
 
-        <!-- <div class="form-group">
-          <label for="planSpots" class="col-sm-2 control-label">Plan Spots</label>
-          <div class="col-sm-10">
-            <ul>
-              <li ng-repeat="spot in newPlan.spots">
-                <input type="text" ng-model="spot.name" placeholder="...name">
-                <input type="text" ng-model="spot.category" placeholder="...category">
-                <input type="number" ng-model="spot.dayNumber" placeholder="...Day Number">
-              </li>
-              <button type="button" ng-click="addEmptySpot()" name="button">+</button>
-            </ul>
-
-          </div>
-        </div> -->
 
 
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-            <button class="btn btn-primary addPlan-button" type="submit" ng-disabled="planCreateForm.$invalid">Add Plan</button>
+            <button class="btn btn-default addPlan-button" type="submit" ng-disabled="planCreateForm.$invalid">Add Plan</button>
           </div>
         </div>
       </form>

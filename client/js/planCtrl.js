@@ -19,9 +19,10 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
 
 
   // This is for show page when user clicks on a spot, We should get details from Google.
-   $scope.getSpotDetails = function(spot){
+   $rootScope.getSpotDetails = function(id){
+     console.log(id);
       var request = {
-        placeId: spot.place_id
+        placeId: id
       };
 
       var service = new google.maps.places.PlacesService(map);
@@ -29,9 +30,40 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
       service.getDetails(request, callback);
 
       function callback(place, status) {
+        console.log(place);
         if (status == google.maps.places.PlacesServiceStatus.OK) {
           $scope.spotDetails = place;
-          console.log($scope.spotDetails);
+
+          var modalInstance = $uibModal.open({
+            templateUrl: 'myModalContent.html',
+            controller: 'ModalInstanceCtrl',
+            resolve: {
+              spotDetails: function () {
+                return $scope.spotDetails;
+              }
+            }
+          });
+          gMap.refresh();
+
+        }
+      }
+
+   };
+
+   $rootScope.getMarkerDetails = function(){
+
+      var request = {
+        placeId: $rootScope.placeId
+      };
+
+      var service = new google.maps.places.PlacesService(map);
+
+      service.getDetails(request, callback);
+
+      function callback(place, status) {
+        console.log(place);
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+          $scope.spotDetails = place;
 
           var modalInstance = $uibModal.open({
             templateUrl: 'myModalContent.html',
@@ -89,7 +121,7 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
         //get the plan ID so we can send it to the right route.
         var id = $cookies.get('currentPlanId')
         var url = '/api/plans/' + id;
-  
+
         $http({
           url: url,
           method: 'patch',
@@ -113,12 +145,24 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
 
 
 planCtrl.controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, spotDetails) {
-
+  var imageNumber = 0;
   $scope.spotDetails = spotDetails;
+  $scope.photosExist = false;
 
-
+  if ($scope.spotDetails.hasOwnProperty('photos')){
+  $scope.photosExist = true;
+  $scope.imgUrl = spotDetails.photos[imageNumber].getUrl({'maxWidth': 300, 'maxHeight': 300})
+  }
   $scope.ok = function () {
     $uibModalInstance.close();
+  };
+  $scope.nextPic = function () {
+    imageNumber = imageNumber + 1;
+    $scope.imgUrl = spotDetails.photos[imageNumber].getUrl({'maxWidth': 300, 'maxHeight': 300})
+  };
+  $scope.previousPic = function () {
+    imageNumber = imageNumber - 1;
+    $scope.imgUrl = spotDetails.photos[imageNumber].getUrl({'maxWidth': 300, 'maxHeight': 300})
   };
 
 });

@@ -77,7 +77,7 @@ chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookie
         //if login is not successful
         if (!response.data.success){
           alert(response.data.message)
-        //redirect the user to homepage if the user if successfully logged in.
+        //redirect the user to homepage if the user is successfully logged in.
         } else if ($rootScope.token){
         $location.path('/')
         }

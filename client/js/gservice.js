@@ -7,7 +7,7 @@ angular.module('gservice', [])
              $rootScope.token = $cookies.get('token');
              // Service our factory will return
              var googleMapService = {};
-
+             $rootScope.placeId = ''; //for line 106
              // Array of locations obtained from API calls
              var locations = [];
 
@@ -55,12 +55,18 @@ angular.module('gservice', [])
                          //     '<br><b>Gender</b>: ' + user.gender +
                          //     '<br><b>Favorite Language</b>: ' + user.favlang +
                          //     '</p>';
+            
+
+                         var contentString = '<div class = "info-window"><strong>' + spot.name + '</strong><br>' + ' <br><button class="btn btn-default" ng-click="getMarkerDetails()">More Details</button>';
+                         var compiled = $compile(contentString)($rootScope);
+
+                        //  infowindow.setContent(compiled[0]);
 
                          // Converts each of the JSON records into Google Maps Location format (Note [Lat, Lng] format).
                          locations.push({
                              latlon: new google.maps.LatLng(spot.geometry.location.lat, spot.geometry.location.lng),
                              message: new google.maps.InfoWindow({
-                                 content: "Content will be coming soon",
+                                 content: compiled[0],
                                  maxWidth: 320
                              }),
                              name: spot.name,
@@ -97,6 +103,7 @@ angular.module('gservice', [])
                    // For each marker created, add a listener that checks for clicks
                    google.maps.event.addListener(marker, 'click', function(e){
 
+                     $rootScope.placeId = n.placeId
                        // When clicked, open the selected marker's message
                        currentSelectedMarker = n;
                        n.message.open(map, marker);
@@ -105,22 +112,18 @@ angular.module('gservice', [])
                      map.fitBounds(bounds);
                });
 
-              //  Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
-              //  var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-              //      this.setZoom(14);
-              //      google.maps.event.removeListener(boundsListener);
-              //  });
 
 
                var input = /** @type {!HTMLInputElement} */(
                    document.getElementById('pac-input'));
 
                var types = document.getElementById('type-selector');
-               // map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
+              //  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
                // map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
 
                var autocomplete = new google.maps.places.Autocomplete(input);
-               autocomplete.bindTo('bounds', map);
+              //  Use bindTo() to bias the results to the map's viewport, even while that viewport changes.
+              autocomplete.bindTo('bounds', map);
 
 
               //  service = new google.maps.places.PlacesService(map);
@@ -138,6 +141,7 @@ angular.module('gservice', [])
                  infowindow.close();
                  marker.setVisible(false);
                  $rootScope.place = autocomplete.getPlace();
+                 console.log($rootScope.place );
                  $rootScope.spot = {name:$rootScope.place.name, place_id:$rootScope.place.place_id, geometry:$rootScope.place.geometry}
                  console.log($rootScope.spot);
 
@@ -172,7 +176,7 @@ angular.module('gservice', [])
                    ].join(' ');
                  }
 
-                 var contentString = '<div><strong>' + $rootScope.place.name + '</strong><br>' + address + ' <br><button class="btn btn-success" ng-click="addSpot()">Add this Spot</button>';
+                 var contentString = '<div class = "info-window"><strong>' + $rootScope.place.name + '</strong><br>' + address + ' <br><button class="btn btn-success" ng-click="addSpot()">Add this Spot</button>';
                  var compiled = $compile(contentString)($rootScope);
 
                  infowindow.setContent(compiled[0]);
