@@ -131,14 +131,27 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
           data: plan
         }).then(function(response){
             $rootScope.showPlan = response.data;
-            var lastElement = $rootScope.showPlan.spots[$rootScope.showPlan.spots.length - 1]
-            $rootScope,mapCenter = {lat: lastElement.geometry.location.lat, lng: lastElement.geometry.location.lng}
+            // var lastElement = $rootScope.showPlan.spots[$rootScope.showPlan.spots.length - 1]
+            // $rootScope,mapCenter = {lat: lastElement.geometry.location.lat, lng: lastElement.geometry.location.lng}
 
             gMap.refresh();
 
             // $scope.refresh();
         });
   }
+
+  //When user clicks on the button in an info window.
+  $rootScope.deleteSpot = function(spot){
+    var index = $rootScope.showPlan.spots.indexOf(spot);
+    console.log(index);
+    //push that spot in the showPlan object that holds all the info about the plan.
+    if (index > -1) {
+    $rootScope.showPlan.spots.splice(index, 1);
+    console.log($rootScope.showPlan.spots);
+    }
+    //call the function that updates the database for that plan
+    $scope.addSpotToDatabase();
+  };
 
 
 }]);

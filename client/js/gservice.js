@@ -48,19 +48,12 @@ angular.module('gservice', [])
                      for(var i= 0; i < spots.length; i++) {
                          var spot = spots[i];
 
-                         // Create popup windows for each record
-                         // var  contentString =
-                         //     '<p><b>Username</b>: ' + user.username +
-                         //     '<br><b>Age</b>: ' + user.age +
-                         //     '<br><b>Gender</b>: ' + user.gender +
-                         //     '<br><b>Favorite Language</b>: ' + user.favlang +
-                         //     '</p>';
-            
+
+
 
                          var contentString = '<div class = "info-window"><strong>' + spot.name + '</strong><br>' + ' <br><button class="btn btn-default" ng-click="getMarkerDetails()">More Details</button>';
                          var compiled = $compile(contentString)($rootScope);
 
-                        //  infowindow.setContent(compiled[0]);
 
                          // Converts each of the JSON records into Google Maps Location format (Note [Lat, Lng] format).
                          locations.push({
@@ -70,7 +63,8 @@ angular.module('gservice', [])
                                  maxWidth: 320
                              }),
                              name: spot.name,
-                             placeId: spot.place_id
+                             placeId: spot.place_id,
+                             icon: spot.icon
                          });
                      }
                      // location is now an array populated with records in Google Maps format
@@ -99,7 +93,13 @@ angular.module('gservice', [])
                        title: "Big Map",
                        icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png",
                    });
-
+                   marker.setIcon(/** @type {google.maps.Icon} */({
+                     url: n.icon,
+                     size: new google.maps.Size(71, 71),
+                     origin: new google.maps.Point(0, 0),
+                     anchor: new google.maps.Point(17, 34),
+                     scaledSize: new google.maps.Size(35, 35)
+                   }));
                    // For each marker created, add a listener that checks for clicks
                    google.maps.event.addListener(marker, 'click', function(e){
 
@@ -109,7 +109,14 @@ angular.module('gservice', [])
                        n.message.open(map, marker);
                    });
                    // Automatically center the map fitting all markers on the screen
+                   if (locations.length > 1){
                      map.fitBounds(bounds);
+                    //  map.setZoom(10);
+
+                   } else {
+                        map.setCenter(position);
+                        map.setZoom(10);
+                   }
                });
 
 
@@ -126,7 +133,6 @@ angular.module('gservice', [])
               autocomplete.bindTo('bounds', map);
 
 
-              //  service = new google.maps.places.PlacesService(map);
 
 
                // INFO-WINDOW
@@ -142,14 +148,21 @@ angular.module('gservice', [])
                  marker.setVisible(false);
                  $rootScope.place = autocomplete.getPlace();
                  console.log($rootScope.place );
-                 $rootScope.spot = {name:$rootScope.place.name, place_id:$rootScope.place.place_id, geometry:$rootScope.place.geometry}
+                 $rootScope.spot = {name:$rootScope.place.name, place_id:$rootScope.place.place_id, geometry:$rootScope.place.geometry, icon:$rootScope.place.icon}
                  console.log($rootScope.spot);
 
                  if (!$rootScope.place.geometry) {
                    window.alert("Autocomplete's returned place contains no geometry");
                    return;
                  }
-                 map.fitBounds(bounds);
+                 if (locations.length > 1){
+                  bounds.extend($rootScope.place.geometry.location);
+                  map.fitBounds(bounds);
+                } else {
+                  map.setCenter($rootScope.place.geometry.location);
+                  map.setZoom(2);
+
+                }
                 //  If the place has a geometry, then present it on a map.
                 //  if ($rootScope.place.geometry.viewport) {
                 //    map.fitBounds($rootScope.place.geometry.viewport);

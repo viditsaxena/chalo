@@ -10,7 +10,7 @@
 
 
         <!-- Side Panel -->
-        <div class="col-md-3">
+        <div class="col-md-3 spots-section pre-scrollable">
             <div class="panel panel-default">
               <input id="pac-input" class="controls" type="text"
               placeholder="Enter a location">
@@ -19,11 +19,17 @@
                     <h2 class="panel-title text-center">{{ showPlan.title }} <span class="glyphicon glyphicon-map-marker"></span></h2>
                 </div>
 
-                  <div class="list-group">
-                    <a  href="#" ng-click="$event.preventDefault(); getSpotDetails(spot.place_id)" class="list-group-item" ng-repeat="spot in showPlan.spots">
-                      <h4 class="list-group-item-heading">{{ spot.name }}</h4>
-                      <p class="list-group-item-text">Recommended by Leo Messi</p>
+                  <div class="list-group row" ng-repeat="spot in showPlan.spots">
+
+                    <div class="col-md-10">
+                    <a  href="#" ng-click="$event.preventDefault(); getSpotDetails(spot.place_id)" class="list-group-item" >
+                      <h6 class="list-group-item-heading">{{ spot.name }}</h6>
                     </a>
+
+                    </div>
+                    <div class="col-md-2">
+                    <button class="btn btn-default" type="button" ng-click="deleteSpot(spot)">x</button>
+                    </div>
                  </div>
 
 
