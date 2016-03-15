@@ -44,7 +44,7 @@ chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookie
     $scope.newUser = {};
     $scope.logInUser = {};
 
-    $scope.hasExtension = true;
+    $scope.hasExtension = false;
 
 
     $scope.createUser = function(){
@@ -94,6 +94,12 @@ $rootScope.token = $cookies.get('token');
       $scope.logInUser = {};
       $location.path('/')
     };
+    
+    $scope.addExtension = function(){
+      chrome.webstore.install();
+      $scope.hasExtension = true;
+    };
+
       chrome.runtime.sendMessage('lhodlodalcbclpnhghakojgeedmephak', { message: "version" },
         function (reply) {
           console.log($scope.hasExtension);
@@ -102,8 +108,6 @@ $rootScope.token = $cookies.get('token');
                     if (reply.version >= 0) {
                         $scope.hasExtension = true;
                         console.log($scope.hasExtension);
-                    } else {
-                      $scope.hasExtension = false;
                     }
                 }
             }
