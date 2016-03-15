@@ -51,7 +51,7 @@ chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookie
             if (reply) {
                 if (reply.version) {
                     if (reply.version >= 1) {
-                        hasExtension = true;
+                        $scope.hasExtension = true;
                     }
                 }
             }
