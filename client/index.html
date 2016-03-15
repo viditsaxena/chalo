@@ -15,7 +15,7 @@
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
+    <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/lhodlodalcbclpnhghakojgeedmephak">
     <!-- Custom CSS -->
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/global.css" rel="stylesheet">
@@ -87,6 +87,14 @@
                   <li ng-show="token">
                       <a class="page-scroll btn" ng-click="logOut()">Logout</a>
                   </li>
+                  <li ng-show="token">
+                  <button onclick="chrome.webstore.install()" id="install-button">Add to Chrome</button>
+                  </li>
+                  <script>
+                  if (chrome.app.isInstalled) {
+                    document.getElementById('install-button').style.display = 'none';
+                  }
+                  </script>
 
               </ul>
           </div>
