@@ -44,6 +44,18 @@ chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookie
     $scope.newUser = {};
     $scope.logInUser = {};
 
+    $scope.hasExtension = false;
+
+    chrome.runtime.sendMessage(lhodlodalcbclpnhghakojgeedmephak, { message: "version" },
+        function (reply) {
+            if (reply) {
+                if (reply.version) {
+                    if (reply.version >= 1) {
+                        hasExtension = true;
+                    }
+                }
+            }
+        });
 
 
     $scope.createUser = function(){
