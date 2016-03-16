@@ -44,7 +44,7 @@ chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookie
     $scope.newUser = {};
     $scope.logInUser = {};
 
-    $scope.hasExtension = false;
+    // $scope.hasExtension = false;
 
 
     $scope.createUser = function(){
@@ -94,24 +94,21 @@ $rootScope.token = $cookies.get('token');
       $scope.logInUser = {};
       $location.path('/')
     };
-    
-    $scope.addExtension = function(){
-      chrome.webstore.install();
-      $scope.hasExtension = true;
-    };
 
-      chrome.runtime.sendMessage('lhodlodalcbclpnhghakojgeedmephak', { message: "version" },
-        function (reply) {
-          console.log($scope.hasExtension);
-            if (reply) {
-                if (reply.version) {
-                    if (reply.version >= 0) {
-                        $scope.hasExtension = true;
-                        console.log($scope.hasExtension);
-                    }
-                }
-            }
-        });
+
+
+      // chrome.runtime.sendMessage('lhodlodalcbclpnhghakojgeedmephak', { message: "version" },
+      //   function (reply) {
+      //     console.log($scope.hasExtension);
+      //       if (reply) {
+      //           if (reply.version) {
+      //               if (reply.version >= 0) {
+      //                   $scope.hasExtension = true;
+      //                   console.log($scope.hasExtension);
+      //               }
+      //           }
+      //       }
+      //   });
 
 }]);
 
@@ -191,5 +188,10 @@ chaloApp.controller('resourcesController', ['$scope', '$rootScope', '$http', '$c
 }]);
 
 chaloApp.controller('homeController', ['$scope', '$rootScope', '$http', '$cookies', '$location', function($scope, $rootScope, $http, $cookies, $location){
+
+  $scope.addExtension = function(){
+    console.log("adding extension");
+    chrome.webstore.install();
+  };
 
 }]);
