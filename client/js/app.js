@@ -1,6 +1,6 @@
 
 
-var chaloApp = angular.module('chaloApp', ['planCtrl', 'gservice', 'ngCookies', 'ngRoute', 'ngMessages', 'ui.bootstrap']);
+var chaloApp = angular.module('chaloApp', ['planCtrl', 'gservice', 'ngCookies', 'ngRoute', 'ngMessages', 'ui.bootstrap', 'dndLists']);
 
 chaloApp.config(function($routeProvider){
 
