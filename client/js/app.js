@@ -1,8 +1,8 @@
 
 
-var chaloApp = angular.module('chaloApp', ['planCtrl', 'gservice', 'ngCookies', 'ngRoute', 'ngMessages', 'ui.bootstrap', 'dndLists']);
+var unwanderApp = angular.module('unwanderApp', ['planCtrl', 'gservice', 'ngCookies', 'ngRoute', 'ngMessages', 'ui.bootstrap', 'dndLists']);
 
-chaloApp.config(function($routeProvider){
+unwanderApp.config(function($routeProvider){
 
     $routeProvider
 
@@ -37,7 +37,7 @@ chaloApp.config(function($routeProvider){
 
 });
 
-chaloApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookies', '$location', function($scope, $rootScope, $http, $cookies, $location){
+unwanderApp.controller('authController', ['$scope', '$rootScope', '$http', '$cookies', '$location', function($scope, $rootScope, $http, $cookies, $location){
 
     $rootScope.token;
     $scope.users = [];
@@ -112,7 +112,7 @@ $rootScope.token = $cookies.get('token');
 
 }]);
 
-chaloApp.controller('resourcesController', ['$scope', '$rootScope', '$http', '$cookies', '$location', function($scope, $rootScope, $http, $cookies, $location){
+unwanderApp.controller('resourcesController', ['$scope', '$rootScope', '$http', '$cookies', '$location', function($scope, $rootScope, $http, $cookies, $location){
 
   $scope.currentUserPlans = [];
   $scope.plans = [];
@@ -187,7 +187,7 @@ chaloApp.controller('resourcesController', ['$scope', '$rootScope', '$http', '$c
 
 }]);
 
-chaloApp.controller('homeController', ['$scope', '$rootScope', '$http', '$cookies', '$location', function($scope, $rootScope, $http, $cookies, $location){
+unwanderApp.controller('homeController', ['$scope', '$rootScope', '$http', '$cookies', '$location', function($scope, $rootScope, $http, $cookies, $location){
 
   $scope.addExtension = function(){
     console.log("adding extension");
