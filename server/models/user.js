@@ -19,10 +19,11 @@ var mongoose    =    require('mongoose'),
 });
 
 
-    // pre-save "hook"
+    // pre-save "hook"- This is what happens before a user gets saved.
     UserSchema.pre('save', function(next) {
       var user = this;
 
+      //isModified is a method on bcrypt module. Take the password user gives when signing up and hash it.
       if (user.isModified('password')) {
         var salt = bcrypt.genSaltSync(10);
         var hash = bcrypt.hashSync(user.password, salt);
@@ -36,13 +37,13 @@ var mongoose    =    require('mongoose'),
       if(!this.created_at) {
           this.created_at = now
       }
-
+      //Go back to the where save was called and execute the next line.
       next();
     });
 
 
 
-    // helpful method to check if password is correct
+    // helpful method to check if password is correct for when the user logs in.
     UserSchema.methods.authenticate = function(password, next){
       var user = this;
       bcrypt.compare(password, user.password, function(err, isMatch) {

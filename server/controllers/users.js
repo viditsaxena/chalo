@@ -6,9 +6,9 @@ var express  =  require('express'),
     var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
     var config = require('./config'); // get our config file
 
-    var secret = {superSecret: config.secret}; // secret variable
+    var secret = {superSecret: config.secret}; // secret variable to sign json web tokens we create and verify.
 
-    // Create a new user and return as json for POST to '/api/users'
+    // Create a new user and return as json for POST to '/api/users'. This is for User Sign Up.
     usersRouter.post('/', function (req, res) {
       User.findOne({
         email: req.body.email
@@ -17,7 +17,7 @@ var express  =  require('express'),
         //if the user is found
         if (user) {
           res.json({ success: false, message: 'User already exists. Please log in.' });
-
+        //if the user is not found. Create the user and then return it.
         } else if (!user) {
           var newUser = new User(req.body);
           newUser.save(function(){ //pre-save hook will be run before user gets saved. See user model.
@@ -27,6 +27,7 @@ var express  =  require('express'),
       });
     });
 
+    //LOGIN ROUTE. This is where the token is created with every successful login and added to user profile.
     usersRouter.post('/authentication_token', function(req, res){
       var password = req.body.password;
       // find the user
@@ -44,7 +45,8 @@ var express  =  require('express'),
             user.authenticate(password, function(isMatch){
               if(isMatch){
                 // if user is found and password is right
-                // create a token with full user object. This is fine because password is hashed. JWT are not encrypted only encoded.
+                // create a token with users email. This is fine because password is hashed. JWT are not encrypted only encoded. So if
+                // the password is included in the jwt it could decoded easily.
                 var token = jwt.sign({email: user.email}, secret.superSecret, {
                   expiresIn: 144000 // expires in 24 hours
                 });
@@ -67,10 +69,11 @@ var express  =  require('express'),
         });
       });
 
-      // route middleware to verify a token. This code will be put in routes before the route code is executed.
+      // route middleware to verify a token in incoming requests.
+      //This code will be put in routes before the route code is executed.
       usersRouter.use(function(req, res, next) {
 
-        // check header or url parameters or post parameters for token
+        // check header or url parameters or post parameters for token in the requests.
         var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
         // If token is there, then decode token
