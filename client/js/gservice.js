@@ -33,8 +33,14 @@ angular.module('gservice', [])
                    }
                  }).then(function(response){
                      // Convert the results into Google Map Format
+                     var day =  $cookies.get('selectedDay')
+                     console.log($cookies.get('selectedDay'));
+                     if (day === "all"){
                      locations = convertToMapPoints(response.data.spots);
-
+                   } else {
+                     locations = convertToMapPoints($rootScope.currentDay.spots);
+                   }
+                   console.log(locations);
                      // Then initialize the map.
                      initializeMap();
                  })

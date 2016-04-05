@@ -15,8 +15,11 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
     $rootScope.mapCenter = {lat: 34.5133, lng: -94.1629};
 
     $rootScope.token = $cookies.get('token');
-    console.log($rootScope.token);
-
+    $scope.currentDayIndex = 0;
+    $rootScope.currentDay = {};
+    $rootScope.daySelected = 'all';
+    $cookies.put('selectedDay', $rootScope.daySelected);
+    $scope.trash = [];
 
   // This is for show page when user clicks on a spot, We should get details from Google.
    $rootScope.getSpotDetails = function(id){
@@ -95,6 +98,9 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
     }).then(function(response){
         //Put the returning plan in an object on the scope so we can use two way binding to show it on the view.
         $rootScope.showPlan = response.data;
+        if ($rootScope.showPlan.days.length === 0) {
+          $rootScope.showPlan.days.push( { number: "1", spots:[] } )
+        }
         console.log($rootScope.showPlan);
         gMap.refresh();
 
@@ -131,8 +137,6 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
           data: plan
         }).then(function(response){
             $rootScope.showPlan = response.data;
-            // var lastElement = $rootScope.showPlan.spots[$rootScope.showPlan.spots.length - 1]
-            // $rootScope,mapCenter = {lat: lastElement.geometry.location.lat, lng: lastElement.geometry.location.lng}
 
             gMap.refresh();
 
@@ -153,14 +157,45 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
     $scope.addSpotToDatabase();
   };
 
-  // *************************************************DRAG AND DROP********************************************************
-
-
-
-
 
   // *************************************************DRAG AND DROP********************************************************
+  $scope.models = {
+      selected: null,
+      lists: {"A": [], "B": []},
+      days: {"One": [], "Two": []}
 
+      // days: [{dayNumber: "1", spots:[{}]}, {dayNumber: "2", spots:[{}]} ]
+  };
+
+
+
+
+
+  // *************************************************DRAG AND DROP********************************************************
+
+  $scope.changeDay = function(value){
+    if ( value === 'all') {
+      $rootScope.daySelected = value;
+    } else {
+    $rootScope.daySelected = value.number;
+    $scope.currentDayIndex = $rootScope.showPlan.days.indexOf(value);
+
+    $rootScope.currentDay = value;
+    }
+    $cookies.put('selectedDay', $rootScope.daySelected);
+    gMap.refresh();
+  }
+
+  $scope.moveASpot = function(index){
+    $rootScope.showPlan.days[$scope.currentDayIndex].spots.splice(index, 1)
+    $scope.addSpotToDatabase();
+  }
+
+  $scope.addDay = function(){
+  var dayNumber = $rootScope.showPlan.days.length + 1
+  $rootScope.showPlan.days.push( { number: dayNumber,  spots:[] } )
+  // $scope.addSpotToDatabase();
+  }
 
 }]);
 

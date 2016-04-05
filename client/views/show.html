@@ -19,19 +19,52 @@
                 <div class="panel-heading">
                     <h2 class="panel-title text-center">{{ showPlan.title }} <span class="glyphicon glyphicon-map-marker"></span></h2>
                 </div>
+                <nav>
+                  <ul class="pagination pagination-sm">
+                    <li>
+                      <a href="#" ng-click="$event.preventDefault(); changeDay('all')">
+                        <span aria-hidden="true">All Clips</span>
+                      </a>
+                    </li>
+                    <!-- <li><a href="#" dnd-list="models.days.One" ng-click="$event.preventDefault(); changeDay('1')">1</a></li>
+                    <li><a href="#" dnd-list="models.days.Two" ng-click="$event.preventDefault(); changeDay('2')">2</a></li> -->
+                    <li><a href="#" ng-repeat="day in showPlan.days" dnd-list="day.spots" ng-click="$event.preventDefault(); changeDay(day)">{{ day.number }}</a></li>
+                    <li><a href="#"  ng-click="$event.preventDefault(); addDay()">+</a></li>
+                    <li><a dnd-list="trash" ng-click="$event.preventDefault()"><i class="fa fa-trash"></i></a></li>
 
-                  <div class="list-group row" ng-repeat="spot in showPlan.spots">
+                  </ul>
+                </nav>
 
-                    <div class="col-md-9">
-                    <a  href="#" ng-click="$event.preventDefault(); getSpotDetails(spot.place_id)" class="list-group-item" >
-                      <h6 class="list-group-item-heading">{{ spot.name }}</h6>
-                    </a>
+                <div ng-show="daySelected === 'all'" class="list-group" >
 
-                    </div>
-                    <div class="col-md-2">
-                    <button class="btn btn-default" type="button" ng-click="deleteSpot(spot)">x</button>
-                    </div>
-                 </div>
+
+                        <a ng-dblclick="$event.preventDefault(); getSpotDetails(spot.place_id)" class="list-group-item"
+                        ng-repeat="spot in showPlan.spots"
+                        dnd-draggable="spot"
+                        dnd-moved="addSpotToDatabase()"
+                        dnd-effect-allowed="move"
+                        dnd-selected="models.selected = spot"
+                        ng-class="{'selected': models.selected === spot}">
+                          <p class="all-clips col-md-9">{{ spot.name }}</p>
+                          <button class="btn btn-default delete-spot-button" type="button" ng-click="deleteSpot(spot)">x</button>
+
+                        </a>
+                </div>
+                <div ng-hide="daySelected === 'all'" class="list-group">
+                  <a class="list-group-item" ng-dblclick="$event.preventDefault(); getSpotDetails(spot.place_id)"
+                  ng-repeat="spot in showPlan.days[currentDayIndex].spots"
+                  dnd-draggable="spot"
+                  dnd-moved="moveASpot($index)"
+                  dnd-effect-allowed="move"
+                  dnd-selected="models.selected = spot"
+                  ng-class="{'selected': models.selected === spot}">
+                    {{ spot.name }}
+                  </a>
+                </div>
+
+
+
+
 
 
                  <script type="text/ng-template" id="myModalContent.html">
