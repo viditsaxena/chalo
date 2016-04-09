@@ -10,7 +10,10 @@ body {
   /*text-shadow: 0 1px 3px rgba(0,0,0,.5);*/
   background-color: #9d9d9d
 }
-
+body {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 400;
+}
 .routePages{
   height: 100%;
   /*padding-top: 100px;*/
@@ -35,12 +38,12 @@ body {
 .navbar-custom {
     margin-bottom: 0;
     border-bottom: 1px solid rgba(255,255,255,.3);
-    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: 'Work Sans', sans-serif;
     background-color: #000;
 }
 
 .navbar-custom .navbar-brand {
-    font-weight: 700;
+    font-weight: 400;
 }
 
 .navbar-custom .navbar-brand:focus {
@@ -62,8 +65,8 @@ body {
     color: white;
 }
 .navbar-nav a {
-  font-family: sans-serif;
-  font-weight: lighter;
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 200;
 }
 
 .navbar-custom .nav li a {
@@ -112,7 +115,12 @@ body {
     }
 }
 
-/*********************NAVIGATION************************/
+/*********************NAVIGATION ENDS************************/
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 200;
+}
 
 /*SignUp and Login Forms*/
 
