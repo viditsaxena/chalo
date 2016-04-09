@@ -67,28 +67,28 @@
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-              <ul class="nav navbar-nav">
+              <ul  class="nav navbar-nav">
                   <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
                   <li class="hidden">
                       <a href="#page-top"></a>
                   </li>
                   <li ng-hide="token">
-                      <a class="page-scroll" href="#/login">Login</a>
+                      <a ng-style="customStyle.style" href="#/login">Login</a>
                   </li>
                   <li ng-hide="token">
-                      <a class="page-scroll" href="#/signup">Signup</a>
+                      <a ng-style="customStyle.style" href="#/signup">Signup</a>
                   </li>
                   <li ng-show="token">
-                      <a class="page-scroll" href="#/create">Create A Plan</a>
+                      <a ng-style="customStyle.style" href="#/create">Create A Plan</a>
                   </li>
                   <!-- <li ng-show="token">
                       <a class="page-scroll" href="#/plans">Browse Plans</a>
                   </li> -->
                   <li ng-show="token">
-                      <a class="page-scroll" href="#/myplans">My Plans</a>
+                      <a ng-style="customStyle.style" href="#/myplans">My Plans</a>
                   </li>
                   <li ng-show="token">
-                      <a class="page-scroll btn" ng-click="logOut()">Logout</a>
+                      <a ng-style="customStyle.style" ng-click="logOut()">Logout</a>
                   </li>
                   <!-- <li ng-hide="hasExtension">
                   <a class="page-scroll btn" ng-click="addExtension()" id="install-button">Add to Chrome</a>

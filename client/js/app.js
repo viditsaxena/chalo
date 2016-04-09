@@ -45,6 +45,8 @@ unwanderApp.controller('authController', ['$scope', '$rootScope', '$http', '$coo
     $scope.logInUser = {};
 
     // $scope.hasExtension = false;
+    $rootScope.customStyle = {};
+    $rootScope.customStyle.style = {"color":"white"};
 
 
     $scope.createUser = function(){
@@ -120,6 +122,7 @@ unwanderApp.controller('resourcesController', ['$scope', '$rootScope', '$http', 
   $scope.newPlan = {title:'', userId: logInUserId}
   $rootScope.token = $cookies.get('token');
   console.log($rootScope.token);
+  $rootScope.customStyle.style = {"color":"black"};
 
 
   $scope.getPlans = function(){
@@ -188,6 +191,7 @@ unwanderApp.controller('resourcesController', ['$scope', '$rootScope', '$http', 
 }]);
 
 unwanderApp.controller('homeController', ['$scope', '$rootScope', '$http', '$cookies', '$location', function($scope, $rootScope, $http, $cookies, $location){
+  $rootScope.customStyle.style = {"color":"white"};
 
   $scope.addExtension = function(){
     console.log("adding extension");
