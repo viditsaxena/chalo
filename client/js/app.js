@@ -46,7 +46,7 @@ unwanderApp.controller('authController', ['$scope', '$rootScope', '$http', '$coo
 
     // $scope.hasExtension = false;
     $rootScope.customStyle = {};
-    $rootScope.customStyle.style = {"color":"white"};
+    $rootScope.customStyle.style = {"color":"black"};
 
 
     $scope.createUser = function(){
