@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="unwanderApp">
+<html lang="en" class="fsvs" ng-app="unwanderApp">
 
 <head>
 
@@ -21,9 +21,10 @@
     <link href="css/global.css" rel="stylesheet">
     <link href="css/home.css" rel="stylesheet">
     <link href="css/plan.css" rel="stylesheet">
-    <!-- <link href="css/dragAndDrop.css" rel="stylesheet"> -->
     <!-- Fonts -->
-<link href='https://fonts.googleapis.com/css?family=Work+Sans:200,400' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Work+Sans:200,400' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="css/jquery.pagepiling.css" />
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -44,11 +45,139 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-messages.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.2/ui-bootstrap-tpls.js"></script>
     <script src="js/angularDragAndDrop.min.js"></script>
+    <script type="text/javascript" src="js/jquery.pagepiling.min.js"></script>
+
 
     <script src="js/gservice.js"></script>
     <script src="js/planCtrl.js"></script>
     <script src="js/app.js"></script>
 
+    <style>
+    /* Section 1
+    * --------------------------------------- */
+    body {
+       /*font-family: sans-serif, arial, helvetica;*/
+    }
+    /* Navigaton bullets styles
+    * --------------------------------------- */
+    #pp-nav li .active span, .pp-slidesNav .active span {
+       background: #bbb;
+    }
+    #pp-nav span, .pp-slidesNav span {
+       border-color: #bbb !important;
+    }
+    /* Sections
+     * --------------------------------------- */
+    .section {
+       background-attachment: fixed;
+       background-size: cover;
+       background-position: 50% 0%;
+       background-repeat: no-repeat;
+    }
+    #section1 {
+       background-image: url(Lunchr.jpeg);
+    }
+    #section2 {
+       background-image: url(http://dgt5r4zz5sach.cloudfront.net/~/media/images/modules/large/nike%20making%20large.jpg?as=1&t=635616687017735022);
+       color: black;
+    }
+    #section3 {
+       background-image: url(http://dgt5r4zz5sach.cloudfront.net/~/media/images/modules/large/homepage_h_05-notext.jpg?as=1&t=635588424878366703);
+       color: black;
+    }
+    #section4 .content {
+       top: 100%;
+       position: absolute;
+       left: 0;
+    }
+    /* Arrow
+     * --------------------------------------- */
+    #arrow {
+       width: 100%;
+       height: 50px;
+       text-align: center;
+       cursor: pointer;
+       position: fixed;
+       bottom: 0;
+       left: 0;
+       border: 0;
+       outline: 0;
+       z-index: 100;
+       color: #BBB;
+       background: transparent;
+       -moz-transition: all 0.2s cubic-bezier(0.7, 0.01, 0.3, 1);
+       -o-transition: all 0.2s cubic-bezier(0.7, 0.01, 0.3, 1);
+       -webkit-transition: all 0.2s cubic-bezier(0.7, 0.01, 0.3, 1);
+       transition: all 0.2s cubic-bezier(0.7, 0.01, 0.3, 1);
+       font: 36px Heiti, 'Lucida Grande', Arial;
+       font-weight: bold;
+    }
+    #arrow span {
+       display: inline-block;
+       position: relative;
+       top: -18px;
+       -moz-transition: all 0.7s cubic-bezier(0.7, 0.01, 0.3, 1);
+       -o-transition: all 0.7s cubic-bezier(0.7, 0.01, 0.3, 1);
+       -webkit-transition: all 0.7s cubic-bezier(0.7, 0.01, 0.3, 1);
+       transition: all 0.7s cubic-bezier(0.7, 0.01, 0.3, 1);
+    }
+    #arrow:hover {
+       background: #EC008C;
+    }
+    #arrow:hover span {
+       top: 0;
+       color: #FFF;
+    }
+    /* Intro texts
+     * --------------------------------------- */
+    .intro {
+       position: absolute;
+       bottom: 100px;
+       text-align: center;
+       width: 100%;
+    }
+    /*.intro h1 {
+       font-size: 5em;
+       font-weight: bold;
+       color: #000;
+    }*/
+    #section4 .intro {
+       color: #000;
+    }
+    /* Content page
+     * --------------------------------------- */
+    .header {
+       padding-top: 80px;
+       text-align: center;
+    }
+    .header h1 {
+       font-size: 5em;
+       font-weight: bold;
+       color: #fff;
+    }
+    .header p {
+       color: #f2f2f2;
+       font-size: 1.7em;
+    }
+    .page {
+       width: 80%;
+       margin: 60px auto;
+       background:white;
+       padding: 60px;
+       -webkit-box-sizing: border-box;
+       /* Safari<=5 Android<=3 */
+       -moz-box-sizing: border-box;
+       /* <=28 */
+       box-sizing: border-box;
+    }
+    .page p {
+       font-style: 12px;
+       margin: 20px 0 0 0;
+       line-height: 1.35em;
+       color: #333;
+    }
+
+    </style>
 
 </head>
 
