@@ -20,7 +20,7 @@ planCtrl.controller('planController', ['$scope', '$rootScope', '$http', '$cookie
     $rootScope.daySelected = 'all';
     $cookies.put('selectedDay', $rootScope.daySelected);
     $scope.trash = [];
-    $rootScope.customStyle.style = {"color":"black"};
+    // $rootScope.customStyle.style = {"color":"black"};
 
   // This is for show page when user clicks on a spot, We should get details from Google.
    $rootScope.getSpotDetails = function(id){

@@ -11,7 +11,7 @@ body {
   background-color: white;
 }
 body {
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 400;
 }
 .routePages{
@@ -38,7 +38,7 @@ body {
 .navbar-custom {
     margin-bottom: 0;
     border-bottom: 1px solid rgba(255,255,255,.3);
-    font-family: 'Work Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     background-color: #000;
 }
 
@@ -62,10 +62,10 @@ body {
 }
 
 .navbar-custom a {
-    color: white;
+    color: black;
 }
 .navbar-nav a {
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 200;
 }
 
@@ -76,13 +76,14 @@ body {
 
 .navbar-custom .nav li a:hover {
     outline: 0;
-    color: rgba(255,255,255,.8);
+    color: rgba(0,0,0,.8);
     background-color: transparent;
 }
 
 .navbar-custom .nav li a:focus,
 .navbar-custom .nav li a:active {
     outline: 0;
+    color: indianred;
     background-color: transparent;
 }
 
@@ -118,7 +119,7 @@ body {
 /*********************NAVIGATION ENDS************************/
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Work Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 200;
 }
 

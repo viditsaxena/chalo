@@ -75,14 +75,14 @@
        background-repeat: no-repeat;
     }
     #section1 {
-       background-image: url(Lunchr.jpeg);
+       background-image: url(section1.png);
     }
     #section2 {
-       background-image: url(http://dgt5r4zz5sach.cloudfront.net/~/media/images/modules/large/nike%20making%20large.jpg?as=1&t=635616687017735022);
+       background-image: url(section2.png);
        color: black;
     }
     #section3 {
-       background-image: url(http://dgt5r4zz5sach.cloudfront.net/~/media/images/modules/large/homepage_h_05-notext.jpg?as=1&t=635588424878366703);
+       background-image: url(section3.png);
        color: black;
     }
     #section4 .content {
@@ -189,7 +189,8 @@
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
                   <i class="fa fa-bars"></i>
               </button>
-              <a ng-style="customStyle.style" class="navbar-brand page-scroll" href="#/">
+              <!-- <a ng-style="customStyle.style" class="navbar-brand page-scroll" href="#/"> -->
+              <a class="navbar-brand page-scroll" href="#/">
                   <i class="fa fa-play-circle"></i>  <span class="light">Unwander <small style="font-size: 10px;">beta</small></span>
               </a>
           </div>
@@ -202,22 +203,31 @@
                       <a href="#page-top"></a>
                   </li>
                   <li ng-hide="token">
-                      <a ng-style="customStyle.style" href="#/login">Login</a>
+                      <!-- <a ng-style="customStyle.style" href="#/login">Login</a> -->
+                      <a  href="#/login">Login</a>
+
                   </li>
                   <li ng-hide="token">
-                      <a ng-style="customStyle.style" href="#/signup">Signup</a>
+                    <!-- <a ng-style="customStyle.style" href="#/signup">Signup</a>                     -->
+                      <a href="#/signup">Signup</a>
                   </li>
                   <li ng-show="token">
-                      <a ng-style="customStyle.style" href="#/create">Create A Plan</a>
+                    <!-- <a ng-style="customStyle.style" href="#/create">Create A Plan</a> -->
+
+                      <a href="#/create">Create A Plan</a>
                   </li>
                   <!-- <li ng-show="token">
                       <a class="page-scroll" href="#/plans">Browse Plans</a>
                   </li> -->
                   <li ng-show="token">
-                      <a ng-style="customStyle.style" href="#/myplans">My Plans</a>
+                    <!-- <a ng-style="customStyle.style" href="#/myplans">My Plans</a> -->
+
+                      <a href="#/myplans">My Plans</a>
                   </li>
                   <li ng-show="token">
-                      <a ng-style="customStyle.style" ng-click="logOut()">Logout</a>
+                    <!-- <a ng-style="customStyle.style" ng-click="logOut()">Logout</a> -->
+
+                      <a ng-click="logOut()">Logout</a>
                   </li>
                   <!-- <li ng-hide="hasExtension">
                   <a class="page-scroll btn" ng-click="addExtension()" id="install-button">Add to Chrome</a>

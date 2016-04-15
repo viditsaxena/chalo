@@ -43,8 +43,8 @@ unwanderApp.controller('authController', ['$scope', '$rootScope', '$http', '$coo
     $scope.users = [];
     $scope.newUser = {};
     $scope.logInUser = {};
-    $rootScope.customStyle = {};
-    $rootScope.customStyle.style = {"color":"black"};
+    // $rootScope.customStyle = {};
+    // $rootScope.customStyle.style = {"color":"black"};
 
 
     $scope.createUser = function(){
@@ -106,7 +106,7 @@ unwanderApp.controller('resourcesController', ['$scope', '$rootScope', '$http', 
   $scope.newPlan = {title:'', userId: logInUserId}
   $rootScope.token = $cookies.get('token');
   console.log($rootScope.token);
-  $rootScope.customStyle.style = {"color":"black"};
+  // $rootScope.customStyle.style = {"color":"black"};
 
 
   $scope.getPlans = function(){
@@ -175,7 +175,7 @@ unwanderApp.controller('resourcesController', ['$scope', '$rootScope', '$http', 
 }]);
 
 unwanderApp.controller('homeController', ['$scope', '$rootScope', '$http', '$cookies', '$location', function($scope, $rootScope, $http, $cookies, $location){
-  $rootScope.customStyle.style = {"color":"white"};
+  // $rootScope.customStyle.style = {"color":"white"};
 
   $scope.addExtension = function(){
     console.log("adding extension");
@@ -196,10 +196,10 @@ unwanderApp.controller('homeController', ['$scope', '$rootScope', '$http', '$coo
         onLeave: function (index, nextIndex, direction) {
 
             //fading out the txt of the leaving section
-            $('.section').eq(index - 1).find('h1, p').fadeOut(700, 'easeInQuart');
+            $('.section').eq(index - 1).find('h1, p').fadeOut(2000, 'easeInQuart');
 
             //fading in the text of the destination (in case it was fadedOut)
-            $('.section').eq(nextIndex - 1).find('h1, p').fadeIn(700, 'easeInQuart');
+            $('.section').eq(nextIndex - 1).find('h1, p').fadeIn(2000, 'easeInQuart');
 
 
             //reaching our last section? The one with our normal site?
