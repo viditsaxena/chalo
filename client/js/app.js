@@ -203,25 +203,25 @@ unwanderApp.controller('homeController', ['$scope', '$rootScope', '$http', '$coo
 
 
             //reaching our last section? The one with our normal site?
-            if (nextIndex == 4) {
+            if (nextIndex == 5) {
                 $('#arrow').hide();
 
                 //fading out navigation bullets
                 $('#pp-nav').fadeOut();
 
-                $('#section4').find('.content').animate({
+                $('#section5').find('.content').animate({
                     top: '0%'
                 }, 700, 'easeInQuart');
             }
 
             //leaving our last section? The one with our normal site?
-            if (index == 4) {
+            if (index == 5) {
                 $('#arrow').show();
 
                 //fadding in navigation bullets
                 $('#pp-nav').fadeIn();
 
-                $('#section4 .content').animate({
+                $('#section5 .content').animate({
                     top: '100%'
                 }, 700, 'easeInQuart');
             }
