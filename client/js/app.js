@@ -196,10 +196,10 @@ unwanderApp.controller('homeController', ['$scope', '$rootScope', '$http', '$coo
         onLeave: function (index, nextIndex, direction) {
 
             //fading out the txt of the leaving section
-            $('.section').eq(index - 1).find('h1, p').fadeOut(2000, 'easeInQuart');
+            $('.section').eq(index - 1).find('h1, p').fadeOut(1000, 'easeInQuart');
 
             //fading in the text of the destination (in case it was fadedOut)
-            $('.section').eq(nextIndex - 1).find('h1, p').fadeIn(2000, 'easeInQuart');
+            $('.section').eq(nextIndex - 1).find('h1, p').fadeIn(1000, 'easeInQuart');
 
 
             //reaching our last section? The one with our normal site?
