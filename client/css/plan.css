@@ -28,7 +28,7 @@ box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 
 #pac-input {
 background-color: #fff;
-font-family: 'Poppins', sans-serif;
+font-family: 'Work Sans', sans-serif;
 font-size: 15px;
 font-weight: 200;
 padding: 0 11px 0 13px;
@@ -42,7 +42,7 @@ border-color: #4d90fe;
 }
 
 .pac-container {
-font-family: 'Poppins', sans-serif;
+font-family: 'Work Sans', sans-serif;
 }
 .delete-spot-button{
   padding: 0;
@@ -54,7 +54,7 @@ padding: 5px 11px 0px 11px;
 }
 
 #type-selector label {
-font-family: 'Poppins', sans-serif;
+font-family: 'Work Sans', sans-serif;
 font-size: 13px;
 font-weight: 200;
 }
