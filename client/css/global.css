@@ -11,7 +11,7 @@ body {
   background-color: white;
 }
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 400;
 }
 .routePages{
@@ -38,7 +38,7 @@ body {
 .navbar-custom {
     margin-bottom: 0;
     border-bottom: 1px solid rgba(255,255,255,.3);
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: #000;
 }
 
@@ -65,7 +65,7 @@ body {
     color: black;
 }
 .navbar-nav a {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 200;
 }
 
@@ -120,7 +120,7 @@ body {
 /*********************NAVIGATION ENDS************************/
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-weight: 200;
 }
 
