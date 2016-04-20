@@ -203,7 +203,7 @@ unwanderApp.controller('homeController', ['$scope', '$rootScope', '$http', '$coo
 
 
             //reaching our last section? The one with our normal site?
-            if (nextIndex == 5) {
+            if (nextIndex == 4) {
                 $('#arrow').hide();
 
                 //fading out navigation bullets
@@ -215,7 +215,7 @@ unwanderApp.controller('homeController', ['$scope', '$rootScope', '$http', '$coo
             }
 
             //leaving our last section? The one with our normal site?
-            if (index == 5) {
+            if (index == 4) {
                 $('#arrow').show();
 
                 //fadding in navigation bullets
