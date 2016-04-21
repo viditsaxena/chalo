@@ -119,12 +119,12 @@ body {
       display: none;
     }
 }
-
 @media(max-width:768px) {
-.mobileHide {
-  display: none;
+  .routePages {
+    display: none;
+  }
 }
-}
+
 
 
 /*********************NAVIGATION ENDS************************/
