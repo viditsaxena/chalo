@@ -27,7 +27,7 @@ unwanderApp.config(function($routeProvider){
       controller: 'resourcesController'
     })
     .when('/myplans', {
-      templateUrl: './views/myplans.html',
+      templateUrl: './views/profile.html',
       controller: 'resourcesController'
     })
     .when('/show', {

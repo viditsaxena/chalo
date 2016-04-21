@@ -115,7 +115,17 @@ body {
         border-bottom: 1px solid rgba(255,255,255,.3);
         background: #000;
     }
+    .mobileShow {
+      display: none;
+    }
 }
+
+@media(max-width:768px) {
+.mobileHide {
+  display: none;
+}
+}
+
 
 /*********************NAVIGATION ENDS************************/
 

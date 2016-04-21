@@ -1,0 +1,39 @@
+
+<div class="container">
+
+  <div class="row jumbotron">
+
+
+    <div class="col-md-6 col-md-offset-2">
+      <h3>Vidit Saxena</h3>
+      <p>
+        I love this website so much that I want to use it all the time.
+      </p>
+      <p><a class="btn btn-lg btn-default" href="#" role="button"><small>Edit</small></a></p>
+    </div>
+    <div class="avatar-image-holder col-md-2 ">
+      <img class="avatar-image"src="https://s3.amazonaws.com/uifaces/faces/twitter/_everaldo/128.jpg" alt="profile" />
+
+    </div>
+
+  </div>
+</div>
+
+<hr>
+
+
+<div class="container form-section">
+
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3 list-group">
+    <a href="#" ng-click="$event.preventDefault(); selectOnePlan(plan)" class="list-group-item" ng-repeat="plan in currentUserPlans">
+      <h4 class="list-group-item-heading">{{ plan.title }}</h4>
+    </a>
+  </div>
+
+</div>
+
+
+
+</div>
