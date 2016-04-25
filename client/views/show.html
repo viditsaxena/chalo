@@ -30,7 +30,7 @@
                     <li><a href="#" dnd-list="models.days.Two" ng-click="$event.preventDefault(); changeDay('2')">2</a></li> -->
                     <li><a href="#" ng-repeat="day in showPlan.days" dnd-list="day.spots" ng-click="$event.preventDefault(); changeDay(day)">{{ day.number }}</a></li>
                     <li><a href="#"  ng-click="$event.preventDefault(); addDay()">+</a></li>
-                    <li><a dnd-list="trash" ng-click="$event.preventDefault()"><i class="fa fa-trash"></i></a></li>
+                    <li><a dnd-list="trash" ng-click="$event.preventDefault()"><i class="fa fa-trash" style="color: red"></i></a></li>
 
                   </ul>
                 </nav>
