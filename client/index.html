@@ -253,15 +253,21 @@
               <a class="navbar-brand page-scroll" href="#/">
                   <i class="fa fa-play-circle"></i>  <span class="light">Unwander <small style="font-size: 10px;">beta</small></span>
               </a>
+
+
+
           </div>
 
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
               <ul  class="nav navbar-nav">
-                  <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                  <li class="hidden">
-                      <a href="#page-top"></a>
-                  </li>
+
+                <button type="button" id="feedback-btn" class="btn btn-primary navbar-btn navbar-left">
+                  <a class="typeform-share link" href="https://vidit6.typeform.com/to/eqoc4w" data-mode="2" target="_blank">Give Feedback On Beta</a>
+    <script>(function(){var qs,js,q,s,d=document,gi=d.getElementById,ce=d.createElement,gt=d.getElementsByTagName,id='typef_orm',b='https://s3-eu-west-1.amazonaws.com/share.typeform.com/';if(!gi.call(d,id)){js=ce.call(d,'script');js.id=id;js.src=b+'share.js';q=gt.call(d,'script')[0];q.parentNode.insertBefore(js,q)}})()</script>
+
+                </button>
+
                   <li ng-hide="token">
                       <!-- <a ng-style="customStyle.style" href="#/login">Login</a> -->
                       <a  href="#/login">Login</a>
@@ -271,11 +277,12 @@
                     <!-- <a ng-style="customStyle.style" href="#/signup">Signup</a>                     -->
                       <a href="#/signup">Signup</a>
                   </li>
+
                   <li ng-show="token">
                     <!-- <a ng-style="customStyle.style" href="#/create">Create A Plan</a> -->
 
                       <a href="#/create"><i class="fa fa-plus-square-o fa-2x" aria-hidden="true"></i>
-</a>
+                      </a>
                   </li>
                   <!-- <li ng-show="token">
                       <a class="page-scroll" href="#/plans">Browse Plans</a>
@@ -283,12 +290,14 @@
                   <li ng-show="token">
                     <!-- <a ng-style="customStyle.style" href="#/myplans">My Plans</a> -->
 
-                      <a href="#/myplans">My Stuff</a>
+                      <a href="#/myplans"><img id="me-icon" src="messi.jpg" alt="" /></a>
                   </li>
-                  <li ng-show="token">
+
+
+                  <li ng-show="token" >
                     <!-- <a ng-style="customStyle.style" ng-click="logOut()">Logout</a> -->
 
-                      <a ng-click="logOut()">Logout</a>
+                      <a class="btn btn-default "ng-click="logOut()">Logout</a>
                   </li>
                   <!-- <li ng-hide="hasExtension">
                   <a class="page-scroll btn" ng-click="addExtension()" id="install-button">Add to Chrome</a>
@@ -300,7 +309,6 @@
       </div>
       <!-- /.container -->
   </nav>
-
 
 
         <div ngCloak class="routePages" ng-view ></div>

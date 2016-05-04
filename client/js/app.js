@@ -190,7 +190,7 @@ unwanderApp.controller('homeController', ['$scope', '$rootScope', '$http', '$coo
     console.log("adding extension");
     chrome.webstore.install();
   };
-
+console.log("Home Controller is loaded");
   angular.element(document).ready(function () {
 
     /*
@@ -202,14 +202,15 @@ unwanderApp.controller('homeController', ['$scope', '$rootScope', '$http', '$coo
         verticalCentered: false,
         css3: false,
         sectionsColor: ['white', '#E8E8E8', '#f2f2f2', '#EC008C'],
+        scrollingSpeed: 800,
+        easing: 'linear',
         onLeave: function (index, nextIndex, direction) {
 
             //fading out the txt of the leaving section
-            $('.section').eq(index - 1).find('h1, p').fadeOut(1000, 'easeInQuart');
+            $('.section').eq(index - 1).find('h1, p').fadeOut(800, 'easeInQuart');
 
             //fading in the text of the destination (in case it was fadedOut)
-            $('.section').eq(nextIndex - 1).find('h1, p').fadeIn(1000, 'easeInQuart');
-
+            $('.section').eq(nextIndex - 1).find('h1, p').fadeIn(800, 'easeInQuart');
 
             //reaching our last section? The one with our normal site?
             if (nextIndex == 4) {

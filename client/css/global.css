@@ -8,7 +8,7 @@ body {
   color: #fff;
   text-align: center;
   /*text-shadow: 0 1px 3px rgba(0,0,0,.5);*/
-  background-color: #f5f5f5;
+  background-color: white;
 }
 body {
   font-family: 'Nunito', sans-serif;
@@ -21,7 +21,7 @@ body {
 .page-header{
   color: black;
 }
-
+/*Feedback Button*/
 
 
 /*Inputs and Buttons*/
@@ -40,6 +40,24 @@ body {
     border-bottom: 1px solid rgba(255,255,255,.3);
     font-family: 'Nunito', sans-serif;
     background-color: #000;
+}
+
+#me-icon {
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+  border: 1px;
+  border-color: crimson;
+  margin-left: 0;
+}
+
+#feedback-btn{
+  background-color: crimson;
+  border-color: crimson;
+  margin-left: 0;
+}
+#feedback-btn a{
+color: white;
 }
 
 .navbar-custom .navbar-brand {
